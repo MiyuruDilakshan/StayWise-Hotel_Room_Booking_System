@@ -5,7 +5,9 @@ import AdminLayout from './layouts/AdminLayout'
 
 // Import pages
 import Home from './pages/Home'
-import AdminDashboard from './pages/admin/dashboard'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminLogin from './pages/admin/AdminLogin'
+import AdminForgotPassword from './pages/admin/AdminForgotPassword'
 
 // Placeholder components for pages team will create
 function Placeholder({ name }) {
@@ -36,6 +38,8 @@ export default function App() {
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
       <Route element={<AdminLayout />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/rooms" element={<Placeholder name="Manage Rooms" />} />
