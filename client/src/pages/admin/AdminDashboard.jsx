@@ -90,70 +90,70 @@ const AdminDashboard = () => {
         <h1>Dashboard</h1>
       </div>
 
-          {/* Overview Section */}
-          <section className="overview-section">
-            <h2>Overview</h2>
-            <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-label">Total Rooms</div>
-                <div className="stat-value">{stats.totalRooms}</div>
-                <div className="stat-growth positive">{stats.roomsGrowth}</div>
-              </div>
+      {/* Overview Section */}
+      <section className="overview-section">
+        <h2>Overview</h2>
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-label">Total Rooms</div>
+            <div className="stat-value">{stats.totalRooms}</div>
+            <div className="stat-growth positive">{stats.roomsGrowth}</div>
+          </div>
 
-              <div className="stat-card">
-                <div className="stat-label">Total Bookings</div>
-                <div className="stat-value">{stats.totalBookings}</div>
-                <div className="stat-growth positive">{stats.bookingsGrowth}</div>
-              </div>
+          <div className="stat-card">
+            <div className="stat-label">Total Bookings</div>
+            <div className="stat-value">{stats.totalBookings}</div>
+            <div className="stat-growth positive">{stats.bookingsGrowth}</div>
+          </div>
 
-              <div className="stat-card">
-                <div className="stat-label">Total Users</div>
-                <div className="stat-value">{stats.totalUsers}</div>
-                <div className="stat-growth positive">{stats.usersGrowth}</div>
-              </div>
+          <div className="stat-card">
+            <div className="stat-label">Total Users</div>
+            <div className="stat-value">{stats.totalUsers}</div>
+            <div className="stat-growth positive">{stats.usersGrowth}</div>
+          </div>
 
-              <div className="stat-card">
-                <div className="stat-label">Revenue</div>
-                <div className="stat-value">${stats.revenue.toLocaleString()}</div>
-                <div className="stat-growth positive">{stats.revenueGrowth}</div>
-              </div>
-            </div>
-          </section>
+          <div className="stat-card">
+            <div className="stat-label">Revenue</div>
+            <div className="stat-value">${stats.revenue.toLocaleString()}</div>
+            <div className="stat-growth positive">{stats.revenueGrowth}</div>
+          </div>
+        </div>
+      </section>
 
-          {/* Recent Bookings Section */}
-          <section className="bookings-section">
-            <h2>Recent Bookings</h2>
-            <div className="table-container">
-              <table className="bookings-table">
-                <thead>
-                  <tr>
-                    <th>Booking ID</th>
-                    <th>Room Type</th>
-                    <th>Check-in</th>
-                    <th>Check-out</th>
-                    <th>User</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentBookings.map((booking) => (
-                    <tr key={booking.id}>
-                      <td className="booking-id">{booking.id}</td>
-                      <td className="room-type">{booking.roomType}</td>
-                      <td>{booking.checkIn}</td>
-                      <td>{booking.checkOut}</td>
-                      <td>{booking.user}</td>
-                      <td>
-                        <span className={`status-badge ${getStatusClass(booking.status)}`}>
-                          {booking.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
+      {/* Recent Bookings Section */}
+      <section className="bookings-section">
+        <h2>Recent Bookings</h2>
+        <div className="table-container">
+          <table className="bookings-table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Room Type</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>User</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentBookings.map((booking) => (
+                <tr key={booking.id}>
+                  <td className="booking-id">{booking.id}</td>
+                  <td className="room-type">{booking.roomType}</td>
+                  <td>{booking.checkIn}</td>
+                  <td>{booking.checkOut}</td>
+                  <td>{booking.user}</td>
+                  <td>
+                    <span className={`status-badge ${getStatusClass(booking.status)}`}>
+                      {booking.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="dashboard-footer">
