@@ -254,7 +254,7 @@
 .rooms-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
+  gap: 50px 12px;
 }
 
 /* --- ROOM CARD STYLES --- */
@@ -264,6 +264,13 @@
   background: transparent;
   box-shadow: none;
   border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.room-card:hover {
+  /* transform: translateY(0px); */
+  box-shadow: none;
 }
 
 .room-image-placeholder {
@@ -309,11 +316,15 @@
   opacity: 0.9;
 }
 
+.room-info {
+  padding: 0px;
+  text-align: start;
+}
+
 /* Room Info Typography */
 .room-info h3 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  /* CHANGED: Tighter margin */
   margin: 0 0 6px 0;
   color: #1a1a1a;
   line-height: 1.2;
