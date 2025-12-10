@@ -127,27 +127,51 @@
 /* --- REST OF STYLES (Same as before) --- */
 .custom-select-wrapper {
   position: relative;
+  width: 100%;
 }
 
 .custom-select {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  background: white;
-  appearance: none;
-  font-size: 14px;
+  padding: 16px 20px;
+  /* Comfortable padding matching the screenshot */
+  padding-right: 40px;
+  /* Extra space on right so text doesn't hit the arrow */
+  border: 1px solid #e5e7eb;
+  /* Light grey border */
+  border-radius: 12px;
+  /* Rounded corners */
+  background-color: white;
+
+  /* Text Styling */
+  font-family: inherit;
+  font-size: 15px;
+  color: #1a1a1a;
   cursor: pointer;
+
+  /* Remove default browser arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Custom Double Arrow Icon (Up/Down Chevrons) */
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 6L6 2L10 6' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M2 10L6 14L10 10' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  /* Position icon on the right */
+  background-size: 12px;
+  /* Size of the icon */
+  transition: border-color 0.2s ease;
 }
 
+.custom-select:focus {
+  outline: none;
+  border-color: #000;
+  /* Darker border on click */
+}
+
+/* Remove the old .select-arrow style if it exists */
 .select-arrow {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  font-size: 20px;
-  color: #666;
+  display: none;
 }
 
 .checkbox-group {
