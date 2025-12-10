@@ -254,7 +254,7 @@
 .rooms-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 2px;
 }
 
 /* --- ROOM CARD STYLES --- */
@@ -269,12 +269,11 @@
 .room-image-placeholder {
   position: relative;
   width: 100%;
-  /* CHANGED: Decreased height to 150px to ensure card looks wider than tall */
-  height: 150px;
+  /* Use aspect-ratio to ensure width > height (landscape) */
+  aspect-ratio: 16 / 10;
   background-color: #ddd;
   border-radius: 20px;
   overflow: hidden;
-  /* CHANGED: Decreased margin to tighten the look */
   margin-bottom: 12px;
 }
 
