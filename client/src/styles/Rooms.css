@@ -262,24 +262,20 @@
   display: flex;
   flex-direction: column;
   background: transparent;
-  /* No background as per screenshot */
   box-shadow: none;
-  /* No shadow */
   border: none;
-  /* No border */
 }
 
 .room-image-placeholder {
   position: relative;
   width: 100%;
-  height: 180px;
-  /* Adjust based on preference */
+  /* CHANGED: Decreased height to 150px to ensure card looks wider than tall */
+  height: 150px;
   background-color: #ddd;
   border-radius: 20px;
-  /* Highly rounded corners */
   overflow: hidden;
-  margin-bottom: 16px;
-  /* Spacing between image and text */
+  /* CHANGED: Decreased margin to tighten the look */
+  margin-bottom: 12px;
 }
 
 /* Background gradient to simulate image */
@@ -287,7 +283,6 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-  /* Once you have images, apply: background-image: url(...); background-size: cover; */
 }
 
 /* POPULAR BADGE STYLES */
@@ -300,7 +295,6 @@
   color: white;
   padding: 8px 16px;
   border-radius: 0 20px 0 20px;
-  /* Top-right & Bottom-left corners */
   font-size: 13px;
   z-index: 2;
   display: flex;
@@ -320,7 +314,8 @@
 .room-info h3 {
   font-size: 18px;
   font-weight: 600;
-  margin: 0 0 4px 0;
+  /* CHANGED: Tighter margin */
+  margin: 0 0 6px 0;
   color: #1a1a1a;
   line-height: 1.2;
 }
