@@ -95,7 +95,7 @@ export default function Rooms() {
                             <option>2 People</option>
                             <option>3+ People</option>
                         </select>
-                        <span className="select-arrow">⌄</span>
+                        {/* Removed the <span> here, CSS will handle the icon now */}
                     </div>
                 </div>
 
