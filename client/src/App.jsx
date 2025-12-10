@@ -6,6 +6,11 @@ import AdminLayout from './layouts/AdminLayout'
 // Import pages
 import Home from './pages/Home'
 import AdminDashboard from './pages/admin/dashboard'
+import UserProfile from './pages/user_profile/UserProfile'
+import MyBookings from './pages/user_profile/MyBookings';
+import UserSettings from './pages/user_profile/UserSettings';
+import EditProfile from './pages/user_profile/EditProfile';
+
 
 // Placeholder components for pages team will create
 function Placeholder({ name }) {
@@ -32,7 +37,11 @@ export default function App() {
         <Route path="/login" element={<Placeholder name="Login" />} />
         <Route path="/register" element={<Placeholder name="Register" />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
-        <Route path="/profile" element={<Placeholder name="User Profile" />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/mybookings" element={<MyBookings />} />
+        <Route path="/settings" element={<UserSettings />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
