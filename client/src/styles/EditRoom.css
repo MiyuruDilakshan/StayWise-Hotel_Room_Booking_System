@@ -1,0 +1,178 @@
+/* client/src/pages/EditRoom.css */
+:root{
+  --primary:#2f6cff;
+  --muted:#f4f7fb;
+  --border:#e1e8ef;
+  --text:#0f1724;
+  --soft:#f7fbfd;
+  --rounded:10px;
+  --maxwidth:980px;
+}
+
+.edit-room-page{
+  max-width: var(--maxwidth);
+  margin: 28px auto;
+  padding: 0 24px 80px;
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.page-title{
+  font-size: 28px;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.edit-room-form{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Form rows */
+.form-row{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+}
+.label{
+  font-size: 14px;
+  font-weight: 600;
+  color: #102030;
+}
+.input, .textarea{
+  background: var(--soft);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  box-shadow: none;
+}
+.input:focus, .textarea:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(47,108,255,0.08);
+}
+
+/* Facilities */
+.facilities-group{
+  border: none;
+  padding: 0;
+  margin: 12px 0;
+}
+.facilities-list{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+.checkbox-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #344054;
+}
+.checkbox-row input[type="checkbox"]{
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  border-radius: 4px;
+}
+
+/* Images gallery */
+.images-section{
+  margin-top: 8px;
+}
+.room-images{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 100%;
+  margin-bottom: 18px;
+}
+.room-images img{
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.image-card{
+  position: relative;
+}
+.remove-image-btn{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Uploader */
+.uploader-section{
+  margin-top: 6px;
+  max-width: 100%;
+}
+.uploader{
+  border: 2px dashed var(--border);
+  background: #fbfdfe;
+  padding: 28px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.uploader p{
+  margin: 6px 0 12px;
+  color: #566275;
+}
+.btn {
+  border-radius: 12px;
+  padding: 9px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+}
+.btn-ghost{
+  background: #f3f6f8;
+  color: #374151;
+  border: 1px solid #e6edf4;
+  margin-right: 12px;
+}
+.btn-primary{
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 6px 18px rgba(47,108,255,0.18);
+}
+
+/* Actions */
+.form-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top: 12px;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .room-images img{ height: 140px; }
+  .page-title{ font-size: 22px; }
+  .edit-room-page{ padding: 0 18px 64px; }
+  .form-row{ max-width: 100%; }
+  .room-images{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px){
+  .room-images{ grid-template-columns: 1fr; }
+  .form-actions{ flex-direction: column-reverse; align-items: stretch; }
+  .btn{ width: 100%; }
+}
