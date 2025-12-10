@@ -8,7 +8,8 @@ import Home from './pages/Home'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminForgotPassword from './pages/admin/AdminForgotPassword'
-import EditRoom from "./pages/admin/EditRoom";    
+import EditRoom from "./pages/admin/EditRoom"; 
+import Bookings from "./pages/admin/Bookings";   
 
 // Placeholder components for pages team will create
 function Placeholder({ name }) {
@@ -44,7 +45,7 @@ export default function App() {
       <Route element={<AdminLayout />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/rooms" element={<Placeholder name="Manage Rooms" />} />
-        <Route path="/admin/bookings" element={<Placeholder name="Manage Bookings" />} />
+        <Route path="/admin/bookings" element={<Bookings />} />
         <Route path="/admin/users" element={<Placeholder name="Manage Users" />} />
         <Route path="/admin/settings" element={<Placeholder name="Admin Settings" />} />
         <Route path="/admin/rooms/edit/:id" element={<EditRoom />} />
