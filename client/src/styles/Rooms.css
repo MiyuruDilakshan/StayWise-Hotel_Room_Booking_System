@@ -1,0 +1,223 @@
+/* src/styles/Rooms.css */
+
+.rooms-page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  gap: 60px;
+  font-family: 'Inter', sans-serif; /* Assuming Inter or similar sans-serif */
+  color: #1a1a1a;
+}
+
+/* --- SIDEBAR FILTERS --- */
+.filters-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.filters-sidebar h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.filter-group {
+  margin-bottom: 30px;
+}
+
+.filter-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Price Slider Style */
+.price-slider {
+  width: 100%;
+  cursor: pointer;
+  accent-color: #000;
+}
+
+/* Capacity Select */
+.custom-select-wrapper {
+  position: relative;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  appearance: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 20px;
+  color: #666;
+}
+
+/* Checkboxes */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+}
+
+.checkbox-item input {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ddd;
+}
+
+/* Sort By Radio Buttons */
+.filters-sidebar h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.sort-options {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+  gap: 12px;
+}
+
+.radio-item:last-child {
+  border-bottom: none;
+}
+
+/* --- MAIN CONTENT --- */
+.rooms-main {
+  flex-grow: 1;
+}
+
+.rooms-header {
+  margin-bottom: 30px;
+}
+
+.rooms-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.rooms-header p {
+  color: #666;
+  font-size: 15px;
+}
+
+/* Grid Layout */
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns as per screenshot */
+  gap: 24px;
+}
+
+/* Room Card */
+.room-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-image-placeholder {
+  position: relative;
+  width: 100%;
+  height: 180px; /* Adjust height based on preference */
+  background-color: #ddd; /* Placeholder grey */
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+/* Specifically mimicking the provided screenshot image style */
+.img-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+}
+
+/* Popular Badge */
+.popular-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(47, 85, 212, 0.9); /* Blue color */
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.badge-highlight {
+  font-weight: 700;
+}
+
+.room-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #1a1a1a;
+}
+
+.room-price {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .rooms-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .rooms-page-container {
+    flex-direction: column;
+  }
+  .filters-sidebar {
+    width: 100%;
+  }
+  .rooms-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .rooms-grid {
+    grid-template-columns: 1fr;
+  }
+}
