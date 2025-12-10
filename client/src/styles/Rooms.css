@@ -174,28 +174,81 @@
 .filters-sidebar h3 {
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  /* Increased spacing below title */
+  color: #1a1a1a;
 }
 
+/* Container for the list of sort options */
 .sort-options {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Space between the cards */
+  border: none;
+  /* Removed the outer border */
+  border-radius: 0;
   padding: 0;
-  overflow: hidden;
 }
 
+/* Individual Radio Card */
 .radio-item {
   display: flex;
   align-items: center;
-  padding: 15px;
+  padding: 16px 20px;
   cursor: pointer;
-  font-size: 14px;
-  border-bottom: 1px solid #e0e0e0;
+  font-size: 15px;
+  color: #1a1a1a;
+  border: 1px solid #e5e7eb;
+  /* Light grey border */
+  border-radius: 12px;
+  /* Rounded corners matching screenshot */
+  background-color: white;
   gap: 12px;
+  transition: all 0.2s ease;
+  font-weight: 400;
 }
 
-.radio-item:last-child {
-  border-bottom: none;
+.radio-item:hover {
+  border-color: #d1d5db;
+}
+
+/* Hide default radio input */
+.radio-item input[type="radio"] {
+  display: none;
+}
+
+/* Custom Radio Circle */
+.radio-custom {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e5e7eb;
+  /* Grey border for unselected */
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+
+/* Selected State */
+.radio-item input[type="radio"]:checked+.radio-custom {
+  border-color: #000000;
+  /* Black border when selected */
+  border-width: 2px;
+}
+
+/* The Black Inner Dot */
+.radio-item input[type="radio"]:checked+.radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #000000;
+  border-radius: 50%;
 }
 
 .rooms-main {
