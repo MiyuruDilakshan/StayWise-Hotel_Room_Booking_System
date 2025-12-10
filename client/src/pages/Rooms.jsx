@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Rooms.css';
 
 export default function Rooms() {
-    // Mock data
+    // Mock data matching your screenshot
     const [rooms] = useState([
         { id: 1, name: "Deluxe Suite", price: 150, type: "Suite", isPopular: true },
         { id: 2, name: "Superior Double Room", price: 220, type: "Double", isPopular: true },
@@ -50,17 +50,12 @@ export default function Rooms() {
                 {/* Price Range */}
                 <div className="filter-group">
                     <label className="filter-label">Price Range</label>
-
                     <div className="slider-container">
-                        {/* The visible track */}
                         <div className="slider-track"></div>
-                        {/* The visible black range bar */}
                         <div
                             className="slider-range"
                             style={{ left: `${minPercent}%`, width: `${maxPercent - minPercent}%` }}
                         ></div>
-
-                        {/* The invisible interactive inputs */}
                         <input
                             type="range"
                             min={min}
@@ -78,11 +73,7 @@ export default function Rooms() {
                             className="thumb thumb-right"
                         />
                     </div>
-
-                    {/* Optional: Display current values */}
-                    <div className="price-values">
-                        ${minPrice} - ${maxPrice}
-                    </div>
+                    <div className="price-values">${minPrice} - ${maxPrice}</div>
                 </div>
 
                 {/* Capacity */}
@@ -95,7 +86,7 @@ export default function Rooms() {
                             <option>2 People</option>
                             <option>3+ People</option>
                         </select>
-                        {/* Removed the <span> here, CSS will handle the icon now */}
+                        {/* CSS handles the icon */}
                     </div>
                 </div>
 
@@ -140,11 +131,11 @@ export default function Rooms() {
                         <div key={room.id} className="room-card">
                             <div className="room-image-placeholder">
                                 {room.isPopular && (
-                                    <span className="popular-badge">
-                                        <span className="badge-highlight">Popular</span> Choice
-                                    </span>
+                                    <div className="popular-badge">
+                                        <span className="badge-bold">Popular</span> <span className="badge-light">Choice</span>
+                                    </div>
                                 )}
-                                {/* Placeholder for future images */}
+                                {/* Image Placeholder - Replace background with real image later */}
                                 <div className="img-bg"></div>
                             </div>
 
