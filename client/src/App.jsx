@@ -48,7 +48,7 @@ export default function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/rooms" element={<Placeholder name="Manage Rooms" />} />
         <Route path="/admin/bookings" element={<Bookings />} />
-        <Route path="/admin/users" element={<Placeholder name="Manage Users" />} />
+        <Route path="/admin/users" element={<Users/>} />
         <Route path="/admin/settings" element={<Placeholder name="Admin Settings" />} />
         <Route path="/admin/rooms/edit/:id" element={<EditRoom />} />
         
