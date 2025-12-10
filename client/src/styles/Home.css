@@ -1,493 +1,358 @@
 /* Home Page Styles */
+
 .home {
   width: 100%;
   overflow-x: hidden;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 80px 20px;
-  text-align: center;
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
-}
-
-.hero-content h1 {
-  font-size: 48px;
-  margin: 0 0 10px 0;
-  font-weight: bold;
-  word-wrap: break-word;
-}
-
-.hero-content p {
-  font-size: 20px;
-  margin: 0 0 40px 0;
-  opacity: 0.9;
-  word-wrap: break-word;
-}
-
-.hero-search {
+  height: 500px;
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 50%, #1a202c 100%);
+  background-image: url('/images/hero.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
-  gap: 10px;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 30px;
-  width: 100%;
-  box-sizing: border-box;
+  margin-bottom: 60px;
 }
 
-.hero-search input,
-.hero-search select {
-  padding: 12px 15px;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  min-width: 120px;
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(74, 85, 104, 0.85), rgba(45, 55, 72, 0.75), rgba(26, 32, 44, 0.65));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+  max-width: 800px;
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.brand-highlight {
+  color: #4299e1;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 40px;
+  opacity: 0.95;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.search-input-wrapper {
   flex: 1;
-  min-width: 120px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: #4a5568;
+}
+
+.search-input::placeholder {
+  color: #a0aec0;
 }
 
 .search-btn {
-  padding: 12px 30px;
-  background-color: #e74c3c;
+  padding: 16px 40px;
+  background: #4299e1;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
   font-size: 16px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
   white-space: nowrap;
 }
 
 .search-btn:hover {
-  background-color: #c0392b;
+  background: #3182ce;
 }
 
-/* Featured Rooms */
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Featured Rooms Section */
 .featured-rooms {
-  padding: 60px 20px;
-  background-color: #f8f9fa;
-  width: 100%;
-  box-sizing: border-box;
+  padding: 60px 0;
+  background: #f7fafc;
 }
 
-.featured-rooms h2 {
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #1a202c;
+  text-align: left;
+}
+
+.loading-text {
   text-align: center;
-  font-size: 36px;
-  margin: 0 0 40px 0;
-  color: #2c3e50;
+  font-size: 18px;
+  color: #718096;
+  padding: 40px 0;
 }
 
 .rooms-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
-  width: 100%;
-  margin: 40px auto 0;
-  max-width: 1200px;
+  margin-bottom: 20px;
 }
 
 .room-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
 }
 
 .room-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 .room-image {
-  font-size: 60px;
-  margin: 0 0 15px 0;
-  line-height: 1;
-}
-
-.room-card h3 {
-  margin: 10px 0 10px 0;
-  color: #2c3e50;
-  font-size: 22px;
-  word-wrap: break-word;
-}
-
-.room-card p {
-  margin: 8px 0;
-  color: #7f8c8d;
-  word-wrap: break-word;
-}
-
-.room-card .capacity {
-  font-size: 14px;
-}
-
-.room-card .rating {
-  font-size: 14px;
-  color: #f39c12;
-}
-
-.room-card .price {
-  font-size: 24px;
-  color: #27ae60;
-  font-weight: bold;
-  margin: 15px 0;
-}
-
-.book-btn {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
-  margin-top: auto;
-}
-
-.book-btn:hover {
-  background-color: #2980b9;
-}
-
-/* Why Choose Us */
-.why-choose {
-  padding: 60px 20px;
   width: 100%;
-  box-sizing: border-box;
+  height: 240px;
+  overflow: hidden;
+  background: #e2e8f0;
 }
 
-.why-choose h2 {
-  text-align: center;
-  font-size: 36px;
-  margin: 0 0 50px 0;
-  color: #2c3e50;
+.room-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.room-card:hover .room-image img {
+  transform: scale(1.1);
+}
+
+.room-info {
+  padding: 24px;
+}
+
+.room-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #1a202c;
+}
+
+.room-description {
+  font-size: 15px;
+  color: #718096;
+  line-height: 1.6;
+}
+
+/* Why StayWise Section */
+.why-staywise {
+  padding: 80px 0;
+  background: white;
+}
+
+.subsection-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1a202c;
+}
+
+.section-description {
+  font-size: 16px;
+  color: #4a5568;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-bottom: 50px;
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin-top: 40px;
 }
 
-.feature {
-  text-align: center;
-  padding: 30px 15px;
+.feature-card {
+  text-align: left;
+  padding: 0;
 }
 
-.feature .icon {
-  font-size: 48px;
-  display: block;
-  margin: 0 0 15px 0;
-  line-height: 1;
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background: #ebf8ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: #4299e1;
 }
 
-.feature h3 {
-  color: #2c3e50;
-  margin: 15px 0;
-  word-wrap: break-word;
-}
-
-.feature p {
-  color: #7f8c8d;
-  line-height: 1.6;
-  word-wrap: break-word;
-}
-
-/* CTA Section */
-.cta-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 60px 20px;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.cta-section h2 {
-  font-size: 36px;
-  margin: 0 0 15px 0;
-  word-wrap: break-word;
-}
-
-.cta-section p {
+.feature-title {
   font-size: 18px;
-  margin: 0 0 30px 0;
-  opacity: 0.9;
-  word-wrap: break-word;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a202c;
 }
 
-.cta-btn {
-  padding: 15px 40px;
-  background-color: #e74c3c;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-  white-space: nowrap;
+.feature-description {
+  font-size: 14px;
+  color: #718096;
+  line-height: 1.6;
 }
 
-.cta-btn:hover {
-  background-color: #c0392b;
+/* Customer Feedback Section */
+.customer-feedback {
+  padding: 80px 0;
+  background: #f7fafc;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.testimonial-card {
+  background: white;
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.testimonial-image {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.testimonial-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 20px 24px 12px;
+  color: #1a202c;
+}
+
+.testimonial-text {
+  font-size: 14px;
+  color: #718096;
+  line-height: 1.6;
+  padding: 0 24px 24px;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .hero {
-    padding: 60px 20px;
+    height: 400px;
   }
-  
-  .hero-content h1 {
+
+  .hero-title {
     font-size: 40px;
   }
-  
-  .featured-rooms h2,
-  .why-choose h2,
-  .cta-section h2 {
-    font-size: 32px;
-  }
-  
-  .rooms-grid,
-  .features-grid {
-    gap: 25px;
-  }
-}
 
-@media (max-width: 768px) {
-  .container {
-    padding: 0 15px;
-  }
-  
-  .hero {
-    padding: 50px 15px;
-  }
-  
-  .hero-content h1 {
-    font-size: 28px;
-    margin-bottom: 8px;
-  }
-
-  .hero-content p {
+  .hero-subtitle {
     font-size: 16px;
-    margin-bottom: 25px;
   }
 
-  .hero-search {
+  .search-box {
     flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+    border-radius: 8px;
   }
 
-  .hero-search input,
-  .hero-search select,
+  .search-input {
+    border-bottom: 1px solid #e2e8f0;
+  }
+
   .search-btn {
     width: 100%;
-    min-width: unset;
-    padding: 12px 12px;
-  }
-  
-  .featured-rooms {
-    padding: 50px 15px;
+    border-radius: 0 0 8px 8px;
   }
 
-  .featured-rooms h2,
-  .why-choose h2,
-  .cta-section h2 {
-    font-size: 26px;
-    margin-bottom: 30px;
+  .section-title {
+    font-size: 28px;
   }
-  
-  .rooms-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+
+  .subsection-title {
+    font-size: 32px;
   }
-  
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  
-  .room-card {
-    padding: 12px;
-  }
-  
-  .room-image {
-    font-size: 45px;
-  }
-  
-  .room-card h3 {
-    font-size: 16px;
-  }
-  
-  .room-card .price {
-    font-size: 18px;
-    margin: 10px 0;
-  }
-  
-  .book-btn {
-    padding: 8px 15px;
-    font-size: 12px;
-  }
-  
-  .feature {
-    padding: 15px 10px;
-  }
-  
-  .feature .icon {
-    font-size: 36px;
-  }
-  
-  .feature h3 {
-    font-size: 16px;
-  }
-  
-  .cta-section {
-    padding: 50px 15px;
-  }
-  
-  .cta-section p {
-    font-size: 15px;
-  }
-  
-  .cta-btn {
-    padding: 10px 25px;
-    font-size: 13px;
+
+  .rooms-grid,
+  .features-grid,
+  .testimonials-grid {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 10px;
+  .hero-title {
+    font-size: 32px;
   }
-  
-  .hero {
-    padding: 35px 10px;
+
+  .section-title {
+    font-size: 24px;
   }
-  
-  .hero-content h1 {
-    font-size: 22px;
-    margin-bottom: 5px;
-  }
-  
-  .hero-content p {
-    font-size: 13px;
-    margin-bottom: 15px;
-  }
-  
-  .hero-search {
-    gap: 8px;
-  }
-  
-  .hero-search input,
-  .hero-search select,
-  .search-btn {
-    padding: 10px 10px;
-    font-size: 12px;
-  }
-  
-  .featured-rooms {
-    padding: 35px 10px;
-  }
-  
-  .featured-rooms h2,
-  .why-choose h2,
-  .cta-section h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .rooms-grid,
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  
-  .room-card {
-    padding: 10px;
-  }
-  
-  .room-image {
-    font-size: 35px;
-    margin-bottom: 8px;
-  }
-  
-  .room-card h3 {
-    font-size: 15px;
-    margin: 8px 0;
-  }
-  
-  .room-card p {
-    margin: 4px 0;
-    font-size: 12px;
-  }
-  
-  .room-card .price {
-    font-size: 16px;
-    margin: 8px 0;
-  }
-  
-  .book-btn {
-    padding: 8px 12px;
-    font-size: 11px;
-  }
-  
-  .why-choose {
-    padding: 35px 10px;
-  }
-  
-  .feature {
-    padding: 12px 8px;
-  }
-  
-  .feature .icon {
+
+  .subsection-title {
     font-size: 28px;
-    margin-bottom: 8px;
-  }
-  
-  .feature h3 {
-    font-size: 14px;
-    margin: 8px 0;
-  }
-  
-  .feature p {
-    font-size: 12px;
-  }
-  
-  .cta-section {
-    padding: 35px 10px;
-  }
-  
-  .cta-section p {
-    font-size: 13px;
-    margin-bottom: 15px;
-  }
-  
-  .cta-btn {
-    padding: 10px 20px;
-    font-size: 12px;
   }
 }

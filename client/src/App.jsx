@@ -5,6 +5,8 @@ import AdminLayout from './layouts/AdminLayout'
 
 // Import pages
 import Home from './pages/Home'
+import Login from './pages/login'
+import Signup from './pages/signup'
 import AdminDashboard from './pages/admin/dashboard'
 
 // Placeholder components for pages team will create
@@ -29,8 +31,8 @@ export default function App() {
         <Route path="/rooms" element={<Placeholder name="Browse Rooms" />} />
         <Route path="/about" element={<Placeholder name="About Us" />} />
         <Route path="/contact" element={<Placeholder name="Contact Us" />} />
-        <Route path="/login" element={<Placeholder name="Login" />} />
-        <Route path="/register" element={<Placeholder name="Register" />} />
+       <Route path="/login" element={<Login />} />
+       <Route path="/signup" element={<Signup />} /> 
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
         <Route path="/profile" element={<Placeholder name="User Profile" />} />
       </Route>
