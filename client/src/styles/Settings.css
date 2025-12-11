@@ -1,0 +1,102 @@
+/* client/src/styles/Settings.css */
+
+.admin-settings-page {
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 20px;
+  color: #0f1724;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 8px;
+  border: 1px solid #eef2f6;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e6eef5;
+  border-radius: 10px;
+  background: #fbfdff;
+  font-size: 14px;
+  color: #0f1724;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.logo-preview {
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #e6eef5;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: #fbfdff;
+}
+
+.logo-preview img {
+  max-height: 120px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.logo-placeholder {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.uploader-row {
+  margin-top: 8px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: #2f6cff;
+  color: white;
+}

@@ -8,6 +8,18 @@ import Home from './pages/Home'
 import Login from './pages/login'
 import Signup from './pages/signup'
 import AdminDashboard from './pages/admin/dashboard'
+import UserProfile from './pages/user_profile/UserProfile'
+import MyBookings from './pages/user_profile/MyBookings';
+import UserSettings from './pages/user_profile/UserSettings';
+import EditProfile from './pages/user_profile/EditProfile';
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminLogin from './pages/admin/AdminLogin'
+import AdminForgotPassword from './pages/admin/AdminForgotPassword'
+import RoomManagement from './pages/admin/RoomManagement'
+import BookingInformation from './pages/BookingInformation';
+import Payment from './pages/Payment';
+import Confirmation from './pages/Confirmation';
+
 
 // Placeholder components for pages team will create
 function Placeholder({ name }) {
@@ -34,16 +46,30 @@ export default function App() {
        <Route path="/login" element={<Login />} />
        <Route path="/signup" element={<Signup />} /> 
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/mybookings" element={<MyBookings />} />
+        <Route path="/settings" element={<UserSettings />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+
         <Route path="/profile" element={<Placeholder name="User Profile" />} />
+        <Route path="/" element={<BookingInformation />} />
+        <Route path="/booking" element={<BookingInformation />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/confirmation" element={<Confirmation />} />
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
       <Route element={<AdminLayout />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/rooms" element={<Placeholder name="Manage Rooms" />} />
-        <Route path="/admin/bookings" element={<Placeholder name="Manage Bookings" />} />
-        <Route path="/admin/users" element={<Placeholder name="Manage Users" />} />
-        <Route path="/admin/settings" element={<Placeholder name="Admin Settings" />} />
+        <Route path="/admin/bookings" element={<Bookings />} />
+        <Route path="/admin/users" element={<Users/>} />
+        <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/rooms/edit/:id" element={<EditRoom />} />
+        
+
       </Route>
     </Routes>
   )

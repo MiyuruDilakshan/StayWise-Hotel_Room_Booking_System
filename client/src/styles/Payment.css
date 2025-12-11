@@ -1,0 +1,58 @@
+/* Payment Page Styles */
+.payment-page {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 2rem 0;
+}
+
+/* Main Container */
+.payment-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Form Section */
+.payment-form-section {
+  width: 100%;
+}
+
+.payment-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.payment-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.payment-subtitle {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.form-input-gray {
+  background-color: #f9fafb;
+}
+
+/* Booking Summary */
+.payment-summary-section {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .payment-container {
+    grid-template-columns: 1fr;
+  }
+}
