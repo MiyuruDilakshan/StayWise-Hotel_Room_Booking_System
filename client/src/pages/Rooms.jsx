@@ -1,8 +1,10 @@
 // src/pages/Rooms.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Rooms.css';
 
 export default function Rooms() {
+    const navigate = useNavigate();
     // Mock data matching your screenshot
     const [rooms] = useState([
         { id: 1, name: "Deluxe Suite", price: 150, type: "Suite", isPopular: true },
@@ -128,7 +130,12 @@ export default function Rooms() {
 
                 <div className="rooms-grid">
                     {rooms.map((room) => (
-                        <div key={room.id} className="room-card">
+                        <div
+                            key={room.id}
+                            className="room-card"
+                            onClick={() => navigate(`/rooms/${room.id}`)}
+                            style={{ cursor: 'pointer' }}
+                        >
                             <div className="room-image-placeholder">
                                 {room.isPopular && (
                                     <div className="popular-badge">
