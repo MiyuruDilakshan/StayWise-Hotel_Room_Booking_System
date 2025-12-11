@@ -34,8 +34,8 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Placeholder name="Browse Rooms" />} />
-        <Route path="/about" element={<Placeholder name="About Us" />} />
-        <Route path="/contact" element={<Placeholder name="Contact Us" />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact  />} />
         <Route path="/login" element={<Placeholder name="Login" />} />
         <Route path="/register" element={<Placeholder name="Register" />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
@@ -51,10 +51,13 @@ export default function App() {
       <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
       <Route element={<AdminLayout />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/rooms" element={<RoomManagement />} />
-        <Route path="/admin/bookings" element={<Placeholder name="Manage Bookings" />} />
-        <Route path="/admin/users" element={<Placeholder name="Manage Users" />} />
-        <Route path="/admin/settings" element={<Placeholder name="Admin Settings" />} />
+        <Route path="/admin/rooms" element={<Placeholder name="Manage Rooms" />} />
+        <Route path="/admin/bookings" element={<Bookings />} />
+        <Route path="/admin/users" element={<Users/>} />
+        <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/rooms/edit/:id" element={<EditRoom />} />
+        
+
       </Route>
     </Routes>
   )
