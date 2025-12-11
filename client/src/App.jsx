@@ -15,6 +15,7 @@ import Settings from "./pages/admin/Settings";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 
 // Placeholder components for pages team will create
@@ -44,6 +45,7 @@ export default function App() {
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
         <Route path="/profile" element={<Placeholder name="User Profile" />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
 
       </Route>
 
