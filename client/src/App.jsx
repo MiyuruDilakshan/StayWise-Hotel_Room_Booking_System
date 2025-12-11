@@ -6,6 +6,7 @@ import AdminLayout from './layouts/AdminLayout'
 // Import pages
 import Home from './pages/Home'
 import Rooms from './pages/Rooms'
+import RoomDetails from './pages/RoomDetails'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminForgotPassword from './pages/admin/AdminForgotPassword'
@@ -35,6 +36,7 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Rooms />} />
+        <Route path="/rooms/:id" element={<RoomDetails />} />
         <Route path="/about" element={<Placeholder name="About Us" />} />
         <Route path="/contact" element={<Placeholder name="Contact Us" />} />
         <Route path="/login" element={<Placeholder name="Login" />} />
