@@ -1,0 +1,53 @@
+/* client/src/styles/Privacy.css */
+
+.privacy-page {
+  padding: 36px 12px 80px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color: #0f1724;
+}
+
+.privacy-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.privacy-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.privacy-container p {
+  color: #475569;
+  line-height: 1.75;
+  margin-bottom: 18px;
+  max-width: 100%;
+}
+
+.policy-section {
+  margin-top: 18px;
+}
+
+.policy-section h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #0f1724;
+}
+
+.policy-section p {
+  margin: 0;
+  color: #475569;
+}
+
+/* responsive */
+@media (max-width: 640px) {
+  .privacy-container {
+    padding: 0 14px;
+  }
+
+  .privacy-title {
+    font-size: 28px;
+  }
+}
