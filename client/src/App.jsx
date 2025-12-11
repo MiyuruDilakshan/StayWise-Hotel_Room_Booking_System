@@ -12,6 +12,10 @@ import EditRoom from "./pages/admin/EditRoom";
 import Bookings from "./pages/admin/Bookings"; 
 import Users from "./pages/admin/Users";
 import Settings from "./pages/admin/Settings";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 
 // Placeholder components for pages team will create
@@ -34,12 +38,15 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Placeholder name="Browse Rooms" />} />
-        <Route path="/about" element={<Placeholder name="About Us" />} />
-        <Route path="/contact" element={<Placeholder name="Contact Us" />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact  />} />
         <Route path="/login" element={<Placeholder name="Login" />} />
         <Route path="/register" element={<Placeholder name="Register" />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
         <Route path="/profile" element={<Placeholder name="User Profile" />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
