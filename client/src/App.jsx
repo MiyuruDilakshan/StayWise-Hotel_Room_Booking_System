@@ -12,6 +12,7 @@ import EditRoom from "./pages/admin/EditRoom";
 import Bookings from "./pages/admin/Bookings"; 
 import Users from "./pages/admin/Users";
 import Settings from "./pages/admin/Settings";
+import About from "./pages/About";
 
 
 // Placeholder components for pages team will create
@@ -34,7 +35,7 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Placeholder name="Browse Rooms" />} />
-        <Route path="/about" element={<Placeholder name="About Us" />} />
+        <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Placeholder name="Contact Us" />} />
         <Route path="/login" element={<Placeholder name="Login" />} />
         <Route path="/register" element={<Placeholder name="Register" />} />
