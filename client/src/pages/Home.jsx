@@ -216,7 +216,7 @@ export default function Home() {
         <div className="amenities-grid">
           <div className="amenity-item">
             <div className="amenity-icon-box">
-              <span className="amenity-emoji">🏊</span>
+              <img src="/icons/Vector - 0.png" alt="Pool" className="amenity-icon" />
             </div>
             <h4 className="amenity-name">Relaxing Pool</h4>
             <p className="amenity-description">
@@ -226,7 +226,7 @@ export default function Home() {
 
           <div className="amenity-item">
             <div className="amenity-icon-box">
-              <span className="amenity-emoji">🍽️</span>
+              <img src="/icons/Vector - 1.png" alt="Dining" className="amenity-icon" />
             </div>
             <h4 className="amenity-name">Fine Dining</h4>
             <p className="amenity-description">
@@ -236,7 +236,7 @@ export default function Home() {
 
           <div className="amenity-item">
             <div className="amenity-icon-box">
-              <span className="amenity-emoji">👥</span>
+              <img src="/icons/Vector - 2.png" alt="Service" className="amenity-icon" />
             </div>
             <h4 className="amenity-name">Personalized Service</h4>
             <p className="amenity-description">
@@ -246,7 +246,7 @@ export default function Home() {
 
           <div className="amenity-item">
             <div className="amenity-icon-box">
-              <span className="amenity-emoji">📶</span>
+              <img src="/icons/Vector - 3.png" alt="WiFi" className="amenity-icon" />
             </div>
             <h4 className="amenity-name">Free High-Speed Wi-Fi</h4>
             <p className="amenity-description">
@@ -317,6 +317,12 @@ export default function Home() {
               exceptional service, stunning views, and unforgettable dining experiences."
             </p>
           </div>
+        </div>
+        
+        <div className="reviews-cta">
+          <button className="reviews-book-btn" onClick={() => navigate('/rooms')}>
+            Book Now
+          </button>
         </div>
       </section>
     </div>

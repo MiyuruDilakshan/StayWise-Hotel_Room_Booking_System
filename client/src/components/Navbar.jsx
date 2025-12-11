@@ -51,11 +51,9 @@ export default function Navbar() {
             {user && (
               <>
                 <Link to="/bookings" className="nav-item" onClick={() => setMobileMenuOpen(false)}>Bookings</Link>
-                
+                <Link to="/profile" className="nav-item" onClick={() => setMobileMenuOpen(false)}>Profile</Link>
               </>
-              
             )}
-            <Link to="/profile" className="nav-item" onClick={() => setMobileMenuOpen(false)}>Profile</Link>
           </div>
 
           <div className="navbar-actions">
