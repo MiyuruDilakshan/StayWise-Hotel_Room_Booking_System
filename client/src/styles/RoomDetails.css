@@ -199,6 +199,12 @@
     color: white;
 }
 
+/* Single Selected Date (No Range yet) */
+.cal-day.single-selected span {
+    background-color: #266388;
+    color: white;
+}
+
 /* --- BOOK BUTTON --- */
 .book-now-container {
     display: flex;

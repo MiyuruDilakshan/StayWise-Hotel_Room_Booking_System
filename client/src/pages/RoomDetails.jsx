@@ -84,11 +84,142 @@ export default function RoomDetails() {
     const navigate = useNavigate();
     const [room, setRoom] = useState(null);
 
+    // Calendar State
+    // Default to displaying current month
+    const [viewDate, setViewDate] = useState(new Date(2024, 6, 1)); // Default July 2024 as per screenshot base, or new Date()
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
     useEffect(() => {
         window.scrollTo(0, 0);
         const foundRoom = roomsData.find(r => r.id === parseInt(id));
         setRoom(foundRoom);
+
+        // --- Pre-select example range for visual demonstration (optional) ---
+        // You can remove this block if you want it completely empty by default
+        const exampleStart = new Date(2024, 6, 5); // July 5
+        const exampleEnd = new Date(2024, 7, 7);   // Aug 7
+        setStartDate(exampleStart);
+        setEndDate(exampleEnd);
+        // ------------------------------------------------------------------
+
     }, [id]);
+
+    const handleMonthChange = (direction) => {
+        const newDate = new Date(viewDate);
+        newDate.setMonth(viewDate.getMonth() + direction);
+        setViewDate(newDate);
+    };
+
+    const isSameDay = (d1, d2) => {
+        return d1 && d2 && d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+    };
+
+    const handleDateClick = (day, monthOffset) => {
+        // Calculate clicked date
+        const year = viewDate.getFullYear();
+        const month = viewDate.getMonth() + monthOffset;
+        const clickedDate = new Date(year, month, day);
+
+        if (!startDate || (startDate && endDate)) {
+            // New selection start
+            setStartDate(clickedDate);
+            setEndDate(null);
+        } else if (startDate && !endDate) {
+            // Completing selection
+            if (clickedDate < startDate) {
+                // User clicked before start, so swap or just reset start
+                setStartDate(clickedDate);
+            } else if (isSameDay(clickedDate, startDate)) {
+                // Clicked same day, do nothing or deselect? Let's just keep single selection
+                setStartDate(clickedDate);
+                setEndDate(null);
+            } else {
+                setEndDate(clickedDate);
+            }
+        }
+    };
+
+    const getMonthData = (offset) => {
+        const year = viewDate.getFullYear();
+        const month = viewDate.getMonth() + offset;
+        const date = new Date(year, month, 1);
+
+        const monthName = date.toLocaleString('default', { month: 'long' });
+        const displayYear = date.getFullYear();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const firstDayIndex = date.getDay(); // 0 = Sun
+
+        return { monthName, displayYear, daysInMonth, firstDayIndex, offset };
+    };
+
+    const renderMonth = (offset) => {
+        const { monthName, displayYear, daysInMonth, firstDayIndex } = getMonthData(offset);
+
+        return (
+            <div className="calendar-month">
+                <div className="month-header">
+                    {/* Only show prev arrow on first month */}
+                    <span
+                        style={{ cursor: 'pointer', visibility: offset === 0 ? 'visible' : 'hidden' }}
+                        onClick={() => handleMonthChange(-1)}
+                    >
+                        ‹
+                    </span>
+                    <span>{monthName} {displayYear}</span>
+                    {/* Only show next arrow on second month */}
+                    <span
+                        style={{ cursor: 'pointer', visibility: offset === 1 ? 'visible' : 'hidden' }}
+                        onClick={() => handleMonthChange(1)}
+                    >
+                        ›
+                    </span>
+                </div>
+                <div className="calendar-grid">
+                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <div key={d} className="cal-day-label">{d}</div>)}
+
+                    {/* Empty slots */}
+                    {[...Array(firstDayIndex)].map((_, i) => <div key={`empty-${i}`} className="cal-day empty"></div>)}
+
+                    {/* Days */}
+                    {[...Array(daysInMonth)].map((_, i) => {
+                        const day = i + 1;
+
+                        // Construct actual date for comparison
+                        // Be careful with month math
+                        const currentYear = viewDate.getFullYear();
+                        const currentMonth = viewDate.getMonth() + offset;
+                        const thisDate = new Date(currentYear, currentMonth, day);
+
+                        let className = "cal-day";
+
+                        if (startDate && endDate) {
+                            if (isSameDay(thisDate, startDate)) {
+                                className += " start-range";
+                            } else if (isSameDay(thisDate, endDate)) {
+                                className += " end-range";
+                            } else if (thisDate > startDate && thisDate < endDate) {
+                                className += " in-range";
+                            }
+                        } else if (startDate && isSameDay(thisDate, startDate)) {
+                            className += " single-selected";
+                        }
+
+                        return (
+                            <div
+                                key={day}
+                                className={className}
+                                onClick={() => handleDateClick(day, offset)}
+                            >
+                                <span>{day}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    };
 
     if (!room) {
         return (
@@ -127,73 +258,25 @@ export default function RoomDetails() {
             <h3 className="section-title">Price & Availability</h3>
             <p className="price-tag">Price per night: ${room.price}</p>
 
+            {/* Interactive Calendar */}
             <div className="calendar-container">
-                {/* July 2024 - Starts Monday (index 1) */}
-                <div className="calendar-month">
-                    <div className="month-header">
-                        <span style={{ cursor: 'pointer' }}>‹</span>
-                        <span>July 2024</span>
-                        <span></span>
-                    </div>
-                    <div className="calendar-grid">
-                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <div key={d} className="cal-day-label">{d}</div>)}
-
-                        {/* Empty slot for Sunday (July 1st was Monday) */}
-                        <div className="cal-day empty"></div>
-
-                        {[...Array(31)].map((_, i) => {
-                            const day = i + 1;
-                            let className = "cal-day";
-
-                            // Visual Logic for July
-                            if (day === 5) className += " start-range";
-                            else if (day > 5) className += " in-range";
-
-                            return (
-                                <div key={i} className={className}>
-                                    <span>{day}</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* August 2024 - Starts Thursday (index 4) */}
-                <div className="calendar-month">
-                    <div className="month-header">
-                        <span></span>
-                        <span>August 2024</span>
-                        <span style={{ cursor: 'pointer' }}>›</span>
-                    </div>
-                    <div className="calendar-grid">
-                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <div key={d} className="cal-day-label">{d}</div>)}
-
-                        {/* Empty slots for Sun, Mon, Tue, Wed (Aug 1st was Thursday) */}
-                        <div className="cal-day empty"></div>
-                        <div className="cal-day empty"></div>
-                        <div className="cal-day empty"></div>
-                        <div className="cal-day empty"></div>
-
-                        {[...Array(31)].map((_, i) => {
-                            const day = i + 1;
-                            let className = "cal-day";
-
-                            // Visual Logic for August
-                            if (day < 7) className += " in-range";
-                            else if (day === 7) className += " end-range";
-
-                            return (
-                                <div key={i} className={className}>
-                                    <span>{day}</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
+                {renderMonth(0)}
+                {renderMonth(1)}
             </div>
 
             <div className="book-now-container">
-                <button className="btn-book-large">Book Now</button>
+                <button
+                    className="btn-book-large"
+                    onClick={() => {
+                        if (startDate && endDate) {
+                            alert(`Booked from ${startDate.toDateString()} to ${endDate.toDateString()}`);
+                        } else {
+                            alert("Please select a check-in and check-out date.");
+                        }
+                    }}
+                >
+                    Book Now
+                </button>
             </div>
 
             <h3 className="section-title">Similar Rooms</h3>
