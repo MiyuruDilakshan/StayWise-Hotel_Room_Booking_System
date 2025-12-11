@@ -19,11 +19,11 @@ const TeamCard = ({ name, role, avatar }) => (
 );
 
 export default function About() {
-  // placeholder images (replace with your own assets if you prefer)
+  // placeholder images for gallery
   const gallery = [
-    "https://images.unsplash.com/photo-1542317854-6e2f6c162fa4?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=8b3f0f3b2f0b3d0f4fa9c6b59b82a1b2",
-    "https://images.unsplash.com/photo-1501117716987-c8e27b6da5d0?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=845f0d5f3c18f6a9c9f9a3f2b9a6f8be",
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=c6a6b8e2e6c1b0c3f9ea1fc7b8b5f9a1"
+    "https://www.ahotellife.com/wp-content/uploads/2017/06/11.jpg",
+    "https://cf.bstatic.com/xdata/images/hotel/max1024x768/34687298.jpg?k=95558a4f06c02cf922911301c846d382eafe1a091b088918d798e7cd5ecf3bad&o=",
+    "https://lakpura.com/cdn/shop/files/LK1500D192-01-E.jpg?v=1691407010"
   ];
 
   const team = [
@@ -35,11 +35,11 @@ export default function About() {
   return (
     <main className="about-page">
       <div className="about-container">
-        <h1 className="about-title">About StayWise</h1>
+        <h1 className="about-page-title">About StayWise</h1>
 
-        <section className="about-section">
-          <h2 className="section-heading">Our Story</h2>
-          <p className="lead">
+        <section className="about-page-section">
+          <h2 className="about-page-heading">Our Story</h2>
+          <p className="about-page-text">
             StayWise Hotels began with a vision to redefine luxury hospitality in Colombo.
             Founded in 2010 by the visionary entrepreneur Ms. Anika Silva, our journey started with a single
             boutique hotel that quickly gained recognition for its exceptional service and elegant ambiance.
@@ -48,9 +48,9 @@ export default function About() {
           </p>
         </section>
 
-        <section className="about-section">
-          <h2 className="section-heading">Our Mission</h2>
-          <p>
+        <section className="about-page-section">
+          <h2 className="about-page-heading">Our Mission</h2>
+          <p className="about-page-text">
             At StayWise, our mission is to create unforgettable moments for our guests. We strive to provide
             unparalleled service, luxurious accommodations, and authentic experiences that reflect the rich
             culture and beauty of Sri Lanka. We are dedicated to sustainability, community engagement,
@@ -58,8 +58,8 @@ export default function About() {
           </p>
         </section>
 
-        <section className="about-section">
-          <h2 className="section-heading">Gallery</h2>
+        <section className="about-page-section">
+          <h2 className="about-page-heading">Gallery</h2>
           <div className="about-gallery">
             {gallery.map((src, i) => (
               <GalleryImage key={i} src={src} alt={`Gallery ${i + 1}`} />
@@ -67,9 +67,9 @@ export default function About() {
           </div>
         </section>
 
-        <section className="about-section">
-          <h2 className="section-heading">Our Team</h2>
-          <p className="small-muted">
+        <section className="about-page-section">
+          <h2 className="about-page-heading">Our Team</h2>
+          <p className="about-page-subtext">
             Our team is the heart of StayWise Hotels — dedicated professionals who ensure every guest receives
             warm, personalized attention.
           </p>

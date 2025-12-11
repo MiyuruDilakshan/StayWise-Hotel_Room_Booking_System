@@ -96,7 +96,7 @@ export default function Signup() {
         <div className="signup-brand">
           <div className="brand-content">
             <h1 className="brand-logo">
-              <span className="brand-stay">stay</span>
+              <span className="brand-stay">Stay</span>
               <span className="brand-wise">Wise</span>
             </h1>
           </div>

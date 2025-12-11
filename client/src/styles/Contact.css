@@ -1,15 +1,17 @@
 /* client/src/styles/Contact.css */
 
 .contact-page {
-  padding: 36px 12px 80px;
+  padding: 60px 20px 80px;
   color: #0f1724;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  width: 100%;
 }
 
 .contact-container {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 20px;
+  text-align: left;
 }
 
 .contact-container h1 {

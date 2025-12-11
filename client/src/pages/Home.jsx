@@ -1,50 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../styles/Home.css'
 
 export default function Home() {
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
-  const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    // Fetch featured rooms from API
-    setLoading(true)
-    setTimeout(() => {
-      setRooms([
-        {
-          id: 1,
-          name: 'Deluxe Room',
-          description: 'Experience luxury in our Deluxe Rooms with stunning city views.',
-          image: '/images/delux room.png'
-        },
-        {
-          id: 2,
-          name: 'Executive Suite',
-          description: 'Indulge in our Executive Suites with a private balcony and premium amenities.',
-          image: '/images/executive suite.png'
-        },
-        {
-          id: 3,
-          name: 'Presidential Suite',
-          description: 'Our Presidential Suite offers unparalleled luxury and space for an unforgettable stay.',
-          image: '/images/president suite.png'
-        }
-      ])
-      setLoading(false)
-    }, 500)
-  }, [])
+  const [guests, setGuests] = useState(1)
+  const navigate = useNavigate()
 
   const handleSearch = () => {
-    // Handle search functionality
-    console.log('Searching:', { checkIn, checkOut })
+    if (checkIn && checkOut) {
+      navigate(`/rooms?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`)
+    } else {
+      alert('Please select check-in and check-out dates')
+    }
   }
 
   return (
     <div className="home">
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero-section">
+        <img 
+          src="/images/hero-bg.png" 
+          alt="Luxury hotel" 
+          className="hero-image"
+        />
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1 className="hero-title">
@@ -53,144 +33,289 @@ export default function Home() {
           <p className="hero-subtitle">Your Perfect Stay in Colombo</p>
           
           <div className="search-box">
-            <div className="search-input-wrapper">
+            <div className="search-input-group">
+              <svg className="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="2"/>
+                <path d="M14 14l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
               <input 
-                type="text" 
-                placeholder="Check-in"
+                type="date" 
+                placeholder="Check-in" 
+                className="search-input"
                 value={checkIn}
                 onChange={(e) => setCheckIn(e.target.value)}
-                className="search-input"
               />
             </div>
-            <button className="search-btn" onClick={handleSearch}>
-              Check-out
+            <input 
+              type="date"
+              placeholder="Check-out"
+              className="search-input"
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
+            />
+            <select 
+              value={guests}
+              onChange={(e) => setGuests(Number(e.target.value))}
+              className="search-input"
+            >
+              {[1, 2, 3, 4, 5, 6].map(num => (
+                <option key={num} value={num}>{num} {num === 1 ? 'Guest' : 'Guests'}</option>
+              ))}
+            </select>
+            <button className="checkout-button" onClick={handleSearch}>
+              Search
             </button>
           </div>
         </div>
       </section>
 
-      {/* Featured Rooms Section */}
-      <section className="featured-rooms">
-        <div className="container">
-          <h2 className="section-title">Featured Rooms</h2>
-          
-          {loading ? (
-            <p className="loading-text">Loading rooms...</p>
-          ) : (
-            <div className="rooms-grid">
-              {rooms.map((room) => (
-                <div key={room.id} className="room-card">
-                  <div className="room-image">
-                    <img src={room.image} alt={room.name} />
-                  </div>
-                  <div className="room-info">
-                    <h3 className="room-name">{room.name}</h3>
-                    <p className="room-description">{room.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+      {/* About Section */}
+      <section className="home-about-section">
+        <div className="home-about-container">
+          <h2 className="home-about-heading">About StayWise Hotels</h2>
+          <p className="home-about-subtitle">Welcome to StayWise Hotels, where luxury meets comfort in the heart of Colombo</p>
+          <p className="home-about-description">
+            Since 2010, StayWise Hotels has been redefining hospitality excellence in Sri Lanka. Our commitment to 
+            providing world-class amenities, personalized service, and elegant accommodations has made us the preferred 
+            choice for discerning travelers. Whether you're here for business or leisure, we ensure every moment of your 
+            stay is truly special. Experience the perfect blend of modern convenience and authentic Sri Lankan hospitality 
+            that defines the StayWise experience.
+          </p>
         </div>
       </section>
 
-      {/* Why StayWise Section */}
-      <section className="why-staywise">
-        <div className="container">
-          <h2 className="section-title">Why StayWise?</h2>
-          <h3 className="subsection-title">Experience the Best</h3>
-          <p className="section-description">
-            At StayWise, we are committed to providing an exceptional experience for every guest.
-            Discover why we are the preferred choice for travelers.
-          </p>
+      {/* Gallery Section */}
+      <section className="gallery-section">
+        <div className="gallery-header">
+          <h2 className="gallery-heading">Explore Our Hotel</h2>
+          <p className="gallery-subtitle">A Visual Journey Through Luxury & Comfort</p>
+        </div>
+        
+        <div className="gallery-masonry">
+          <div className="gallery-card gallery-large">
+            <img 
+              src="https://www.ahotellife.com/wp-content/uploads/2017/06/11.jpg" 
+              alt="Presidential Suite" 
+              className="gallery-img"
+            />
+            <div className="gallery-info">
+              <span className="gallery-tag">Amenities</span>
+              <h3 className="gallery-title">Rooftop Pool</h3>
+              <p className="gallery-desc">Stunning city views await</p>
+            </div>
+          </div>
 
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" fill="currentColor"/>
-                </svg>
-              </div>
-              <h4 className="feature-title">Relaxing Pool</h4>
-              <p className="feature-description">
-                Unwind by our luxurious pool, perfect for a refreshing dip or lounging in the sun.
+          <div className="gallery-card">
+            <img 
+              src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/34687298.jpg?k=95558a4f06c02cf922911301c846d382eafe1a091b088918d798e7cd5ecf3bad&o=" 
+              alt="Hotel Lobby" 
+              className="gallery-img"
+            />
+            <div className="gallery-info">
+              <span className="gallery-tag">Interiors</span>
+              <h3 className="gallery-title">Grand Lobby</h3>
+              <p className="gallery-desc">Modern elegance welcomes you</p>
+            </div>
+          </div>
+
+          <div className="gallery-card">
+            <img 
+              src="https://storage.kempinski.com/cdn-cgi/image/w=1920,f=auto,fit=scale-down,g=auto/ki-cms-prod/images/8/4/1/9/119148-1-eng-GB/535c0e7fcdd6-70118457_4K.jpg" 
+              alt="Infinity Pool" 
+              className="gallery-img"
+            />
+            <div className="gallery-info">
+              <span className="gallery-tag">Amenities</span>
+              <h3 className="gallery-title">Presidential Suite</h3>
+              <p className="gallery-desc">Experience ultimate luxury in our flagship suite</p>
+            </div>
+          </div>
+
+          <div className="gallery-card gallery-wide">
+            <img 
+              src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/67/26/f6/welcome-to-tenku-the.jpg" 
+              alt="Hotel Restaurant" 
+              className="gallery-img"
+            />
+            <div className="gallery-info">
+              <span className="gallery-tag">Dining</span>
+              <h3 className="gallery-title">Gourmet Restaurant</h3>
+              <p className="gallery-desc">Award-winning culinary excellence</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Rooms Section */}
+      <section className="featured-rooms-section">
+        <h2 className="section-heading">Featured Rooms</h2>
+        
+        <div className="rooms-container">
+          <div className="room-card">
+            <div className="room-image-wrapper">
+              <img 
+                src="/images/deluxe-room.png" 
+                alt="Deluxe Room" 
+                className="room-image"
+              />
+            </div>
+            <div className="room-details">
+              <h3 className="room-name">Deluxe Room</h3>
+              <p className="room-desc">
+                Experience luxury in our Deluxe Rooms with stunning city views.
               </p>
             </div>
+          </div>
 
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z" fill="currentColor"/>
-                </svg>
-              </div>
-              <h4 className="feature-title">Fine Dining</h4>
-              <p className="feature-description">
-                Savor exquisite cuisine at our award-winning restaurants, offering a variety of culinary delights.
+          <div className="room-card">
+            <div className="room-image-wrapper">
+              <img 
+                src="/images/executive-suite.png" 
+                alt="Executive Suite" 
+                className="room-image"
+              />
+            </div>
+            <div className="room-details">
+              <h3 className="room-name">Executive Suite</h3>
+              <p className="room-desc">
+                Indulge in our Executive Suites with a private balcony and premium amenities.
               </p>
             </div>
+          </div>
 
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/>
-                </svg>
-              </div>
-              <h4 className="feature-title">Personalized Service</h4>
-              <p className="feature-description">
-                Our dedicated staff ensures every guest receives personalized attention and care.
-              </p>
+          <div className="room-card">
+            <div className="room-image-wrapper">
+              <img 
+                src="/images/presidential-suite.png" 
+                alt="Presidential Suite" 
+                className="room-image"
+              />
             </div>
-
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" fill="currentColor"/>
-                </svg>
-              </div>
-              <h4 className="feature-title">Free High-Speed Wi-Fi</h4>
-              <p className="feature-description">
-                Stay connected with our complimentary high-speed Wi-Fi throughout the hotel.
+            <div className="room-details">
+              <h3 className="room-name">Presidential Suite</h3>
+              <p className="room-desc">
+                Our Presidential Suite offers unparalleled luxury and space for an unforgettable stay.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Customer Feedback Section */}
-      <section className="customer-feedback">
-        <div className="container">
-          <h2 className="section-title">Customer Feedback</h2>
+      {/* Why StayWise Section */}
+      <section className="why-staywise-section">
+        <h2 className="why-heading">Why StayWise?</h2>
+        
+        <div className="experience-header">
+          <h3 className="experience-title">Experience the Best</h3>
+          <p className="experience-text">
+            At StayWise, we are committed to providing an exceptional experience for every guest. 
+            Discover why we are the preferred choice for travelers.
+          </p>
+        </div>
 
-          <div className="testimonials-grid">
-            <div className="testimonial-card">
-              <div className="testimonial-image">
-                <img src="/images/girl2.png" alt="Amelia Harper" />
-              </div>
-              <h4 className="testimonial-name">Exceptional Service</h4>
-              <p className="testimonial-text">
-                "The service at StayWise was impeccable. The staff went above and beyond to make our stay memorable." - Amelia Harper
-              </p>
+        <div className="amenities-grid">
+          <div className="amenity-item">
+            <div className="amenity-icon-box">
+              <span className="amenity-emoji">🏊</span>
             </div>
+            <h4 className="amenity-name">Relaxing Pool</h4>
+            <p className="amenity-description">
+              Unwind by our luxurious pool, perfect for a refreshing dip or lounging in the sun.
+            </p>
+          </div>
 
-            <div className="testimonial-card">
-              <div className="testimonial-image">
-                <img src="/images/man.png" alt="Ethan Bennett" />
-              </div>
-              <h4 className="testimonial-name">Luxurious Comfort</h4>
-              <p className="testimonial-text">
-                "The rooms were beautifully designed and incredibly comfortable. I felt right at home." - Ethan Bennett
-              </p>
+          <div className="amenity-item">
+            <div className="amenity-icon-box">
+              <span className="amenity-emoji">🍽️</span>
             </div>
+            <h4 className="amenity-name">Fine Dining</h4>
+            <p className="amenity-description">
+              Savor exquisite cuisine at our award-winning restaurants, offering a variety of culinary delights.
+            </p>
+          </div>
 
-            <div className="testimonial-card">
-              <div className="testimonial-image">
-                <img src="/images/girl 1.png" alt="Sophia Carter" />
-              </div>
-              <h4 className="testimonial-name">Unforgettable Experience</h4>
-              <p className="testimonial-text">
-                "From the moment we arrived, we were treated like royalty. StayWise exceeded all our expectations." - Sophia Carter
-              </p>
+          <div className="amenity-item">
+            <div className="amenity-icon-box">
+              <span className="amenity-emoji">👥</span>
             </div>
+            <h4 className="amenity-name">Personalized Service</h4>
+            <p className="amenity-description">
+              Our dedicated staff ensures every guest receives personalized attention and care.
+            </p>
+          </div>
+
+          <div className="amenity-item">
+            <div className="amenity-icon-box">
+              <span className="amenity-emoji">📶</span>
+            </div>
+            <h4 className="amenity-name">Free High-Speed Wi-Fi</h4>
+            <p className="amenity-description">
+              Stay connected with our complimentary high-speed Wi-Fi throughout the hotel.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Reviews Section */}
+      <section className="reviews-section">
+        <div className="reviews-header">
+          <h2 className="reviews-heading">What Our Guests Say</h2>
+          <p className="reviews-subtitle">Real experiences from real travelers</p>
+        </div>
+        
+        <div className="reviews-container">
+          <div className="review-card">
+            <div className="review-header">
+              <img 
+                src="/images/customer1.jpeg" 
+                alt="Amelia Harper" 
+                className="review-avatar"
+              />
+              <div className="review-info">
+                <h4 className="review-name">Amelia Harper</h4>
+                <div className="review-stars">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p className="review-text">
+              "The service at StayWise was impeccable. The staff went above and beyond to make our stay memorable. 
+              The attention to detail and warm hospitality truly set this hotel apart."
+            </p>
+          </div>
+
+          <div className="review-card">
+            <div className="review-header">
+              <img 
+                src="/images/customer2.png" 
+                alt="Ethan Bennett" 
+                className="review-avatar"
+              />
+              <div className="review-info">
+                <h4 className="review-name">Ethan Bennett</h4>
+                <div className="review-stars">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p className="review-text">
+              "The rooms were beautifully designed and incredibly comfortable. I felt right at home from the moment I stepped in. 
+              The modern amenities and elegant decor exceeded all my expectations."
+            </p>
+          </div>
+
+          <div className="review-card">
+            <div className="review-header">
+              <img 
+                src="/images/customer3.jpg" 
+                alt="Sophia Carter" 
+                className="review-avatar"
+              />
+              <div className="review-info">
+                <h4 className="review-name">Sophia Carter</h4>
+                <div className="review-stars">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+            <p className="review-text">
+              "From the moment we arrived, we were treated like royalty. StayWise exceeded all our expectations with its 
+              exceptional service, stunning views, and unforgettable dining experiences."
+            </p>
           </div>
         </div>
       </section>
