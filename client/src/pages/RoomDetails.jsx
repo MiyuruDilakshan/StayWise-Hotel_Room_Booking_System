@@ -79,30 +79,35 @@ const roomsData = [
     },
 ];
 
+const MONTHS = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
 export default function RoomDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [room, setRoom] = useState(null);
 
     // Calendar State
-    // Default to displaying current month
-    const [viewDate, setViewDate] = useState(new Date(2024, 6, 1)); // Default July 2024 as per screenshot base, or new Date()
+    const [viewDate, setViewDate] = useState(new Date(2024, 6, 1)); // Default July 2024
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+
+    // Generate years for dropdown (e.g., current year - 1 to +5)
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 6 }, (_, i) => currentYear - 1 + i);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         const foundRoom = roomsData.find(r => r.id === parseInt(id));
         setRoom(foundRoom);
 
-        // --- Pre-select example range for visual demonstration (optional) ---
-        // You can remove this block if you want it completely empty by default
+        // Example Range (Optional)
         const exampleStart = new Date(2024, 6, 5); // July 5
         const exampleEnd = new Date(2024, 7, 7);   // Aug 7
         setStartDate(exampleStart);
         setEndDate(exampleEnd);
-        // ------------------------------------------------------------------
-
     }, [id]);
 
     const handleMonthChange = (direction) => {
@@ -111,28 +116,44 @@ export default function RoomDetails() {
         setViewDate(newDate);
     };
 
+    const handleDropdownChange = (offset, type, value) => {
+        const year = viewDate.getFullYear();
+        const month = viewDate.getMonth() + offset;
+        const currentInView = new Date(year, month, 1);
+
+        if (type === 'month') {
+            currentInView.setMonth(parseInt(value));
+        } else if (type === 'year') {
+            currentInView.setFullYear(parseInt(value));
+        }
+
+        // We need to adjust 'viewDate' (which corresponds to offset 0)
+        // If we changed the month of offset 1 (right calendar), we need to shift viewDate so that right calendar is correct.
+        // The right calendar is always viewDate + 1 month.
+        // So if right calendar target is T, then viewDate should be T - 1 month.
+
+        const newViewDate = new Date(currentInView);
+        newViewDate.setMonth(newViewDate.getMonth() - offset);
+        setViewDate(newViewDate);
+    };
+
     const isSameDay = (d1, d2) => {
         return d1 && d2 && d1.getFullYear() === d2.getFullYear() &&
             d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
     };
 
     const handleDateClick = (day, monthOffset) => {
-        // Calculate clicked date
         const year = viewDate.getFullYear();
         const month = viewDate.getMonth() + monthOffset;
         const clickedDate = new Date(year, month, day);
 
         if (!startDate || (startDate && endDate)) {
-            // New selection start
             setStartDate(clickedDate);
             setEndDate(null);
         } else if (startDate && !endDate) {
-            // Completing selection
             if (clickedDate < startDate) {
-                // User clicked before start, so swap or just reset start
                 setStartDate(clickedDate);
             } else if (isSameDay(clickedDate, startDate)) {
-                // Clicked same day, do nothing or deselect? Let's just keep single selection
                 setStartDate(clickedDate);
                 setEndDate(null);
             } else {
@@ -146,29 +167,48 @@ export default function RoomDetails() {
         const month = viewDate.getMonth() + offset;
         const date = new Date(year, month, 1);
 
-        const monthName = date.toLocaleString('default', { month: 'long' });
+        const monthIndex = date.getMonth();
         const displayYear = date.getFullYear();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const firstDayIndex = date.getDay(); // 0 = Sun
 
-        return { monthName, displayYear, daysInMonth, firstDayIndex, offset };
+        return { monthIndex, displayYear, daysInMonth, firstDayIndex, offset };
     };
 
     const renderMonth = (offset) => {
-        const { monthName, displayYear, daysInMonth, firstDayIndex } = getMonthData(offset);
+        const { monthIndex, displayYear, daysInMonth, firstDayIndex } = getMonthData(offset);
 
         return (
             <div className="calendar-month">
                 <div className="month-header">
-                    {/* Only show prev arrow on first month */}
                     <span
                         style={{ cursor: 'pointer', visibility: offset === 0 ? 'visible' : 'hidden' }}
                         onClick={() => handleMonthChange(-1)}
                     >
                         ‹
                     </span>
-                    <span>{monthName} {displayYear}</span>
-                    {/* Only show next arrow on second month */}
+
+                    <div className="header-selects">
+                        <select
+                            className="header-select"
+                            value={monthIndex}
+                            onChange={(e) => handleDropdownChange(offset, 'month', e.target.value)}
+                        >
+                            {MONTHS.map((m, i) => (
+                                <option key={i} value={i}>{m}</option>
+                            ))}
+                        </select>
+                        <select
+                            className="header-select"
+                            value={displayYear}
+                            onChange={(e) => handleDropdownChange(offset, 'year', e.target.value)}
+                        >
+                            {years.map(y => (
+                                <option key={y} value={y}>{y}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <span
                         style={{ cursor: 'pointer', visibility: offset === 1 ? 'visible' : 'hidden' }}
                         onClick={() => handleMonthChange(1)}
@@ -178,16 +218,9 @@ export default function RoomDetails() {
                 </div>
                 <div className="calendar-grid">
                     {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <div key={d} className="cal-day-label">{d}</div>)}
-
-                    {/* Empty slots */}
                     {[...Array(firstDayIndex)].map((_, i) => <div key={`empty-${i}`} className="cal-day empty"></div>)}
-
-                    {/* Days */}
                     {[...Array(daysInMonth)].map((_, i) => {
                         const day = i + 1;
-
-                        // Construct actual date for comparison
-                        // Be careful with month math
                         const currentYear = viewDate.getFullYear();
                         const currentMonth = viewDate.getMonth() + offset;
                         const thisDate = new Date(currentYear, currentMonth, day);
@@ -258,7 +291,6 @@ export default function RoomDetails() {
             <h3 className="section-title">Price & Availability</h3>
             <p className="price-tag">Price per night: ${room.price}</p>
 
-            {/* Interactive Calendar */}
             <div className="calendar-container">
                 {renderMonth(0)}
                 {renderMonth(1)}
@@ -295,7 +327,7 @@ export default function RoomDetails() {
     );
 }
 
-/* Icons */
+/* Icons (Unchanged) */
 const IconWifi = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>);
 const IconAC = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h20" /><path d="M2 16h20" /><path d="M2 8h20" /><path d="M6 12v4" /><path d="M10 12v4" /><path d="M14 12v4" /><path d="M18 12v4" /></svg>);
 const IconCoffee = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>);
