@@ -7,14 +7,14 @@ export default function Rooms() {
     const navigate = useNavigate();
     // Mock data matching your screenshot
     const [rooms] = useState([
-        { id: 1, name: "Deluxe Suite", price: 150, type: "Suite", isPopular: true },
-        { id: 2, name: "Superior Double Room", price: 220, type: "Double", isPopular: true },
-        { id: 3, name: "Executive Suite", price: 350, type: "Suite", isPopular: true },
-        { id: 4, name: "Ocean View Suite", price: 400, type: "Suite", isPopular: false },
-        { id: 5, name: "Executive Suite", price: 500, type: "Suite", isPopular: false },
-        { id: 6, name: "Superior Double Room", price: 500, type: "Double", isPopular: false },
-        { id: 7, name: "Presidential Suite", price: 500, type: "Suite", isPopular: false },
-        { id: 8, name: "Wodden Pit", price: 400, type: "Double", isPopular: false },
+        { id: 1, name: "Deluxe Suite", price: 150, type: "Suite", isPopular: true, image: "/assets/room-1.png" },
+        { id: 2, name: "Superior Double Room", price: 220, type: "Double", isPopular: true, image: "/assets/room-2.png" },
+        { id: 3, name: "Executive Suite", price: 350, type: "Suite", isPopular: true, image: "/assets/room-3.png" },
+        { id: 4, name: "Ocean View Suite", price: 400, type: "Suite", isPopular: false, image: "/assets/room-4.png" },
+        { id: 5, name: "Presidential Suite", price: 500, type: "Suite", isPopular: false, image: "/assets/room-5.png" },
+        { id: 6, name: "Standard Room", price: 500, type: "Double", isPopular: false, image: "/assets/room-6.png" },
+        { id: 7, name: "Presidential Suite", price: 500, type: "Suite", isPopular: false, image: "/assets/room-5.png" }, // Reusing room 5 image for duplicate/simlar id 7
+        { id: 8, name: "Wodden Pit", price: 400, type: "Double", isPopular: false, image: "/assets/room-8.png" },
     ]);
 
     // Price Range State
@@ -143,7 +143,14 @@ export default function Rooms() {
                                     </div>
                                 )}
                                 {/* Image Placeholder - Replace background with real image later */}
-                                <div className="img-bg"></div>
+                                <div
+                                    className="img-bg"
+                                    style={{
+                                        backgroundImage: `url(${room.image})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center'
+                                    }}
+                                ></div>
                             </div>
 
                             <div className="room-info">

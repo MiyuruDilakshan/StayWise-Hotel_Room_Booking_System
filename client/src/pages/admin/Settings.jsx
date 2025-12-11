@@ -10,7 +10,7 @@ export default function Settings() {
   const [settings, setSettings] = useState({
     hotelName: "",
     address: "",
-    logoUrl: "",
+    logoUrl: "/assets/admin-logo.png",
   });
 
   const currentPassRef = useRef();

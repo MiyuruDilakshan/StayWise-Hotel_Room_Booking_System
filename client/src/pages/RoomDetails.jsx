@@ -12,7 +12,7 @@ const roomsData = [
         type: "Suite",
         description: "Experience the epitome of luxury in our Deluxe Suite. Featuring a spacious living area, a king-sized bed, and a private balcony overlooking the city skyline.",
         longDescription: "The suite is elegantly furnished with modern amenities, including a flat-screen TV, a minibar, and a luxurious bathroom with a soaking tub. Perfect for discerning travelers seeking a serene retreat.",
-        image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop"
+        image: "/assets/room-1.png"
     },
     {
         id: 2,
@@ -21,7 +21,7 @@ const roomsData = [
         type: "Double",
         description: "Experience superior comfort in our beautifully crafted Superior Double Room, offering a warm and inviting atmosphere.",
         longDescription: "With refined interiors, cozy bedding, and a sleek ensuite bathroom, this room provides everything you need for a restful night. Perfect for short or extended stays.",
-        image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1974&auto=format&fit=crop"
+        image: "/assets/room-2.png"
     },
     {
         id: 3,
@@ -30,7 +30,7 @@ const roomsData = [
         type: "Suite",
         description: "Designed for business and leisure, the Executive Suite offers a dedicated workspace and a relaxing lounge area.",
         longDescription: "Enjoy premium amenities, high-speed internet, and exclusive access to the executive lounge. The perfect blend of productivity and relaxation.",
-        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop"
+        image: "/assets/room-3.png"
     },
     {
         id: 4,
@@ -39,7 +39,7 @@ const roomsData = [
         type: "Suite",
         description: "Wake up to breathtaking views of the ocean in this stunning suite designed for nature lovers.",
         longDescription: "Features floor-to-ceiling windows, a private terrace, and a spa-inspired bathroom. Experience tranquility like never before.",
-        image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1974&auto=format&fit=crop"
+        image: "/assets/room-4.png"
     },
     {
         id: 5,
@@ -48,7 +48,7 @@ const roomsData = [
         type: "Suite",
         description: "A comfortable and stylish room perfect for solo travelers or couples.",
         longDescription: "Equipped with a queen-sized bed, modern bathroom, and all essential amenities to ensure a pleasant stay.",
-        image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=2070&auto=format&fit=crop"
+        image: "/assets/room-6.png"
     },
     {
         id: 6,
@@ -57,7 +57,7 @@ const roomsData = [
         type: "Double",
         description: "Another variation of our popular Superior Double, offering different views and layout.",
         longDescription: "Includes all standard amenities with an added touch of luxury in the furnishings and decor.",
-        image: "https://images.unsplash.com/photo-1591088398332-8a7791972843?q=80&w=1974&auto=format&fit=crop"
+        image: "/assets/room-2.png"
     },
     {
         id: 7,
@@ -66,7 +66,7 @@ const roomsData = [
         type: "Suite",
         description: "The ultimate in luxury and exclusivity. Our Presidential Suite is designed for VIPs and special occasions.",
         longDescription: "Features a grand living room, dining area, kitchenette, and a master bedroom with a jacuzzi. Unmatched service and style.",
-        image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=2070&auto=format&fit=crop"
+        image: "/assets/room-5.png"
     },
     {
         id: 8,
@@ -75,7 +75,7 @@ const roomsData = [
         type: "Double",
         description: "A unique, rustic-themed room featuring handcrafted wooden furniture and warm lighting.",
         longDescription: "Escape the ordinary in this cozy retreat. Perfect for those looking for a different kind of hotel experience.",
-        image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=2070&auto=format&fit=crop"
+        image: "/assets/room-8.png"
     },
 ];
 
