@@ -5,6 +5,8 @@ import AdminLayout from './layouts/AdminLayout'
 
 // Import pages
 import Home from './pages/Home'
+import Login from './pages/login'
+import Signup from './pages/signup'
 import AdminDashboard from './pages/admin/dashboard'
 import UserProfile from './pages/user_profile/UserProfile'
 import MyBookings from './pages/user_profile/MyBookings';
@@ -39,10 +41,10 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Placeholder name="Browse Rooms" />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact  />} />
-        <Route path="/login" element={<Placeholder name="Login" />} />
-        <Route path="/register" element={<Placeholder name="Register" />} />
+        <Route path="/about" element={<Placeholder name="About Us" />} />
+        <Route path="/contact" element={<Placeholder name="Contact Us" />} />
+       <Route path="/login" element={<Login />} />
+       <Route path="/signup" element={<Signup />} /> 
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/mybookings" element={<MyBookings />} />

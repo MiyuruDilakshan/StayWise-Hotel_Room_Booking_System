@@ -8,7 +8,7 @@ export default function MainLayout() {
   const location = useLocation()
   
   // Pages that should NOT show footer
-  const hideFooterPaths = ['/login', '/register']
+  const hideFooterPaths = ['/login', '/signup']
   const showFooter = !hideFooterPaths.includes(location.pathname)
 
   return (
