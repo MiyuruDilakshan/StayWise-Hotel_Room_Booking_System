@@ -8,14 +8,10 @@ import Home from './pages/Home'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminForgotPassword from './pages/admin/AdminForgotPassword'
-import EditRoom from "./pages/admin/EditRoom"; 
-import Bookings from "./pages/admin/Bookings"; 
-import Users from "./pages/admin/Users";
-import Settings from "./pages/admin/Settings";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
+import RoomManagement from './pages/admin/RoomManagement'
+import BookingInformation from './pages/BookingInformation';
+import Payment from './pages/Payment';
+import Confirmation from './pages/Confirmation';
 
 
 // Placeholder components for pages team will create
@@ -44,9 +40,10 @@ export default function App() {
         <Route path="/register" element={<Placeholder name="Register" />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
         <Route path="/profile" element={<Placeholder name="User Profile" />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-
+        <Route path="/" element={<BookingInformation />} />
+        <Route path="/booking" element={<BookingInformation />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/confirmation" element={<Confirmation />} />
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
