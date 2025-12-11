@@ -27,10 +27,14 @@
   z-index: 1;
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/home-hero.png');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.25));
@@ -545,29 +549,38 @@
   font-style: italic;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 1200px) {
-  .rooms-container {
-    grid-template-columns: repeat(2, 1fr);
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 60px 20px;
   }
 
-  .amenities-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .hero-content h1 {
+    font-size: 40px;
+  }
+
+  .featured-rooms h2,
+  .why-choose h2,
+  .cta-section h2 {
+    font-size: 32px;
+  }
+
+  .rooms-grid,
+  .features-grid {
+    gap: 25px;
   }
 
   .reviews-container {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .gallery-masonry {
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 220px;
-    gap: 16px;
+  .hero {
+    padding: 50px 15px;
   }
 
-  .gallery-large {
-    grid-column: span 2;
-    grid-row: span 2;
+  .hero-content h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
   }
 
   .gallery-wide {
@@ -586,9 +599,8 @@
     font-size: 40px;
   }
 
-  .hero-subtitle {
-    font-size: 18px;
-    margin-bottom: 35px;
+  .featured-rooms {
+    padding: 50px 15px;
   }
 
   .about-section,
@@ -596,145 +608,174 @@
     padding: 0 20px;
   }
 
-  .about-heading,
-  .gallery-heading {
-    font-size: 28px;
+  .rooms-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
 
-  .gallery-masonry {
+  .features-grid {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 200px;
     gap: 12px;
   }
 
-  .gallery-large,
-  .gallery-wide {
-    grid-column: span 1;
-    grid-row: span 1;
+  .room-card {
+    padding: 12px;
   }
 
-  .search-box {
-    flex-direction: column;
-    padding: 16px;
-    border-radius: 16px;
-    gap: 12px;
+  .room-image {
+    font-size: 45px;
   }
 
-  .search-input-group {
-    width: 100%;
-    padding: 12px 16px;
-    background: #F9FAFB;
-    border-radius: 12px;
-  }
-
-  .checkout-button {
-    width: 100%;
-    border-radius: 12px;
-    padding: 14px;
-  }
-
-  .featured-rooms-section,
-  .why-staywise-section,
-  .reviews-section {
-    padding: 0 20px;
-    margin: 60px auto;
-  }
-
-  .section-heading,
-  .why-heading,
-  .reviews-heading {
-    font-size: 28px;
-  }
-
-  .experience-title {
-    font-size: 36px;
-  }
-
-  .experience-text {
+  .room-card h3 {
     font-size: 16px;
   }
 
-  .rooms-container {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .room-card .price {
+    font-size: 18px;
+    margin: 10px 0;
   }
 
-  .amenities-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .book-btn {
+    padding: 8px 15px;
+    font-size: 12px;
   }
 
-  .reviews-container {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .feature {
+    padding: 15px 10px;
+  }
+
+  .feature .icon {
+    font-size: 36px;
+  }
+
+  .feature h3 {
+    font-size: 16px;
+  }
+
+  .cta-section {
+    padding: 50px 15px;
+  }
+
+  .cta-section p {
+    font-size: 15px;
+  }
+
+  .cta-btn {
+    padding: 10px 25px;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-section {
-    height: 350px;
-    margin: 15px;
+  .container {
+    padding: 0 10px;
   }
 
-  .hero-title {
-    font-size: 32px;
+  .hero {
+    padding: 35px 10px;
   }
 
-  .hero-subtitle {
-    font-size: 16px;
+  .hero-content h1 {
+    font-size: 22px;
+    margin-bottom: 5px;
   }
 
-  .search-box {
-    padding: 12px;
+  .hero-content p {
+    font-size: 13px;
+    margin-bottom: 15px;
   }
 
-  .section-heading,
-  .why-heading,
-  .reviews-heading {
-    font-size: 24px;
+  .hero-search {
+    gap: 8px;
   }
 
-  .experience-title {
-    font-size: 28px;
+  .hero-search input,
+  .hero-search select,
+  .search-btn {
+    padding: 10px 10px;
+    font-size: 12px;
   }
 
-  .room-image-wrapper {
-    height: 220px;
+  .featured-rooms {
+    padding: 35px 10px;
   }
 
-  .review-card {
-    padding: 24px;
+  .featured-rooms h2,
+  .why-choose h2,
+  .cta-section h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
   }
 
-  .review-avatar {
-    width: 56px;
-    height: 56px;
-  }
-
-  .room-details {
-    padding: 20px;
-  }
-
-  .amenity-icon-box {
-    width: 56px;
-    height: 56px;
-  }
-
-  .about-heading,
-  .gallery-heading {
-    font-size: 24px;
-  }
-
-  .gallery-grid {
+  .rooms-grid,
+  .features-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
 
-  .gallery-item {
-    height: 240px;
+  .room-card {
+    padding: 10px;
   }
 
-  .gallery-overlay p {
+  .room-image {
+    font-size: 35px;
+    margin-bottom: 8px;
+  }
+
+  .room-card h3 {
+    font-size: 15px;
+    margin: 8px 0;
+  }
+
+  .room-card p {
+    margin: 4px 0;
+    font-size: 12px;
+  }
+
+  .room-card .price {
     font-size: 16px;
+    margin: 8px 0;
+  }
+
+  .book-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .why-choose {
+    padding: 35px 10px;
+  }
+
+  .feature {
+    padding: 12px 8px;
+  }
+
+  .feature .icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .feature h3 {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .feature p {
+    font-size: 12px;
+  }
+
+  .cta-section {
+    padding: 35px 10px;
+  }
+
+  .cta-section p {
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
+
+  .cta-btn {
+    padding: 10px 20px;
+    font-size: 12px;
   }
 }

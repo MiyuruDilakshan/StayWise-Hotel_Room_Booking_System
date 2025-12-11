@@ -5,6 +5,15 @@ import AdminLayout from './layouts/AdminLayout'
 
 // Import pages
 import Home from './pages/Home'
+import Rooms from './pages/Rooms'
+import RoomDetails from './pages/RoomDetails'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminLogin from './pages/admin/AdminLogin'
+import AdminForgotPassword from './pages/admin/AdminForgotPassword'
+import EditRoom from "./pages/admin/EditRoom";
+import Bookings from "./pages/admin/Bookings";
+import Users from "./pages/admin/Users";
+import Settings from "./pages/admin/Settings";
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Privacy from './pages/Privacy'
@@ -32,8 +41,8 @@ function Placeholder({ name }) {
   return (
     <div style={{ padding: 40, textAlign: 'center' }}>
       <h2>{name}</h2>
-      <p>This page is ready to be implemented by the team.<br/>
-        when you make pages in client/src/pages make sure to import pages in app.jsx(client\src\App.jsx) <br/>
+      <p>This page is ready to be implemented by the team.<br />
+        when you make pages in client/src/pages make sure to import pages in app.jsx(client\src\App.jsx) <br />
         example - add " import Login from './pages/Login' " in under "// Import pages"
       </p>
     </div>
@@ -46,12 +55,12 @@ export default function App() {
       {/* Customer Routes WITH navbar & footer */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} /> 
+        <Route path="/rooms" element={<Rooms />} />
+        <Route path="/rooms/:id" element={<RoomDetails />} />
+        <Route path="/about" element={<Placeholder name="About Us" />} />
+        <Route path="/contact" element={<Placeholder name="Contact Us" />} />
+        <Route path="/login" element={<Placeholder name="Login" />} />
+        <Route path="/register" element={<Placeholder name="Register" />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/mybookings" element={<MyBookings />} />
@@ -71,6 +80,9 @@ export default function App() {
         <Route path="/admin/bookings" element={<Bookings />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/rooms/edit/:id" element={<EditRoom />} />
+
+
       </Route>
     </Routes>
   )

@@ -1,0 +1,330 @@
+/* src/styles/RoomDetails.css */
+
+/* ... (Keep Hero, Text Content, Amenities sections as they are) ... */
+
+.room-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
+    color: #1a1a1a;
+}
+
+.room-details-hero {
+    width: 100%;
+    height: 500px;
+    background-color: #e5e5e5;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.room-details-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.room-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+}
+
+.room-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 24px;
+    max-width: 1000px;
+}
+
+.room-description p {
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 40px 0 20px 0;
+    color: #1a1a1a;
+}
+
+.amenities-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.amenity-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    min-width: 200px;
+    background: white;
+}
+
+.amenity-icon {
+    width: 24px;
+    height: 24px;
+    color: #1a1a1a;
+}
+
+.amenity-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+/* --- AVAILABILITY & CALENDAR (UPDATED) --- */
+.price-tag {
+    font-size: 16px;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+}
+
+.calendar-container {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.calendar-month {
+    width: 340px;
+    /* Fixed width for consistency */
+    flex-shrink: 0;
+}
+
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #1a1a1a;
+    padding: 0 10px;
+}
+
+.header-selects {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-select {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    appearance: none;
+    /* simple removal of default arrow in some browsers, or keep it */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: #9ca3af;
+}
+
+.header-select:hover {
+    color: #2f54eb;
+    text-decoration-color: #2f54eb;
+}
+
+/* Fallback for focusing */
+.header-select:focus {
+    outline: none;
+    color: #2f54eb;
+}
+
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: 8px;
+    /* Space between rows */
+    /* No column gap to allow range backgrounds to connect visually */
+}
+
+.cal-day-label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+/* Base Day Cell */
+.cal-day {
+    height: 44px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #1a1a1a;
+}
+
+/* The number circle wrapper */
+.cal-day span {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    /* Sit on top of background */
+}
+
+.cal-day.empty {
+    cursor: default;
+}
+
+/* Range Backgrounds */
+.cal-day.in-range {
+    background-color: #f3f4f6;
+    /* Light grey range color */
+}
+
+/* Start Date: Blue Circle + Grey Background on the Right Half */
+.cal-day.start-range {
+    background: linear-gradient(to right, transparent 50%, #f3f4f6 50%);
+}
+
+.cal-day.start-range span {
+    background-color: #266388;
+    /* Dark Blue/Teal from screenshot */
+    color: white;
+}
+
+/* End Date: Blue Circle + Grey Background on the Left Half */
+.cal-day.end-range {
+    background: linear-gradient(to left, transparent 50%, #f3f4f6 50%);
+}
+
+.cal-day.end-range span {
+    background-color: #266388;
+    /* Dark Blue/Teal from screenshot */
+    color: white;
+}
+
+/* Single Selected Date (No Range yet) */
+.cal-day.single-selected span {
+    background-color: #266388;
+    color: white;
+}
+
+/* --- BOOK BUTTON --- */
+.book-now-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0 80px 0;
+}
+
+.btn-book-large {
+    background-color: #2f54eb;
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-book-large:hover {
+    background-color: #1d39c4;
+}
+
+/* --- SIMILAR ROOMS --- */
+.similar-rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.similar-room-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.similar-room-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    background-color: #e5e5e5;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.similar-room-info h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: #1a1a1a;
+}
+
+.similar-room-info p {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .calendar-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .similar-rooms-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .room-details-hero {
+        height: 300px;
+    }
+
+    .similar-rooms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .amenities-grid {
+        flex-direction: column;
+    }
+
+    .amenity-card {
+        width: 100%;
+    }
+}
