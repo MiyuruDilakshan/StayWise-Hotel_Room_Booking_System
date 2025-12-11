@@ -10,6 +10,13 @@ import UserProfile from './pages/user_profile/UserProfile'
 import MyBookings from './pages/user_profile/MyBookings';
 import UserSettings from './pages/user_profile/UserSettings';
 import EditProfile from './pages/user_profile/EditProfile';
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminLogin from './pages/admin/AdminLogin'
+import AdminForgotPassword from './pages/admin/AdminForgotPassword'
+import EditRoom from "./pages/admin/EditRoom"; 
+import Bookings from "./pages/admin/Bookings"; 
+import Users from "./pages/admin/Users";
+import Settings from "./pages/admin/Settings";
 
 
 // Placeholder components for pages team will create
@@ -45,12 +52,17 @@ export default function App() {
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
       <Route element={<AdminLayout />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/rooms" element={<Placeholder name="Manage Rooms" />} />
-        <Route path="/admin/bookings" element={<Placeholder name="Manage Bookings" />} />
-        <Route path="/admin/users" element={<Placeholder name="Manage Users" />} />
-        <Route path="/admin/settings" element={<Placeholder name="Admin Settings" />} />
+        <Route path="/admin/bookings" element={<Bookings />} />
+        <Route path="/admin/users" element={<Users/>} />
+        <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/rooms/edit/:id" element={<EditRoom />} />
+        
+
       </Route>
     </Routes>
   )
