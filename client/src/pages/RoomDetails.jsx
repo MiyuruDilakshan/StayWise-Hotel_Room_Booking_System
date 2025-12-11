@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/RoomDetails.css';
 
-// Expanded Mock Data (In a real app, this would come from an API)
+// Mock Data
 const roomsData = [
     {
         id: 1,
@@ -84,7 +84,6 @@ export default function RoomDetails() {
     const navigate = useNavigate();
     const [room, setRoom] = useState(null);
 
-    // Find the room based on ID when the component mounts or ID changes
     useEffect(() => {
         window.scrollTo(0, 0);
         const foundRoom = roomsData.find(r => r.id === parseInt(id));
@@ -95,9 +94,7 @@ export default function RoomDetails() {
         return (
             <div className="room-details-container">
                 <h2>Room not found</h2>
-                <button className="btn-book-large" onClick={() => navigate('/rooms')}>
-                    Back to Rooms
-                </button>
+                <button className="btn-book-large" onClick={() => navigate('/rooms')}>Back to Rooms</button>
             </div>
         );
     }
@@ -106,57 +103,32 @@ export default function RoomDetails() {
         <div className="room-details-container">
             {/* Hero Image */}
             <div className="room-details-hero">
-                <div className="hero-placeholder" style={{
-                    background: `url('${room.image}') center/cover no-repeat`
-                }}>
-                </div>
+                <div className="hero-placeholder" style={{ background: `url('${room.image}') center/cover no-repeat` }}></div>
             </div>
 
-            {/* Title & Description */}
             <h1 className="room-title">{room.name}</h1>
-
             <div className="room-description">
                 <p>{room.description}</p>
                 <p>{room.longDescription}</p>
             </div>
 
-            {/* Amenities Grid */}
+            {/* Amenities */}
             <h3 className="section-title">Amenities</h3>
             <div className="amenities-grid">
-                <div className="amenity-card">
-                    <IconWifi />
-                    <span className="amenity-text">High-Speed<br />Wi-Fi</span>
-                </div>
-                <div className="amenity-card">
-                    <IconAC />
-                    <span className="amenity-text">Air<br />Conditioning</span>
-                </div>
-                <div className="amenity-card">
-                    <IconCoffee />
-                    <span className="amenity-text">Coffee Maker</span>
-                </div>
-                <div className="amenity-card">
-                    <IconPool />
-                    <span className="amenity-text">Swimming<br />Pool</span>
-                </div>
-                <div className="amenity-card">
-                    <IconGym />
-                    <span className="amenity-text">Fitness<br />Center</span>
-                </div>
-                <div className="amenity-card">
-                    <IconParking />
-                    <span className="amenity-text">Free Parking</span>
-                </div>
+                <div className="amenity-card"><IconWifi /><span className="amenity-text">High-Speed<br />Wi-Fi</span></div>
+                <div className="amenity-card"><IconAC /><span className="amenity-text">Air<br />Conditioning</span></div>
+                <div className="amenity-card"><IconCoffee /><span className="amenity-text">Coffee Maker</span></div>
+                <div className="amenity-card"><IconPool /><span className="amenity-text">Swimming<br />Pool</span></div>
+                <div className="amenity-card"><IconGym /><span className="amenity-text">Fitness<br />Center</span></div>
+                <div className="amenity-card"><IconParking /><span className="amenity-text">Free Parking</span></div>
             </div>
 
             {/* Price & Availability */}
             <h3 className="section-title">Price & Availability</h3>
             <p className="price-tag">Price per night: ${room.price}</p>
 
-            {/* Static Calendar Visual */}
             <div className="calendar-container">
-
-                {/* July 2024 */}
+                {/* July 2024 - Starts Monday (index 1) */}
                 <div className="calendar-month">
                     <div className="month-header">
                         <span style={{ cursor: 'pointer' }}>‹</span>
@@ -165,17 +137,28 @@ export default function RoomDetails() {
                     </div>
                     <div className="calendar-grid">
                         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <div key={d} className="cal-day-label">{d}</div>)}
+
+                        {/* Empty slot for Sunday (July 1st was Monday) */}
                         <div className="cal-day empty"></div>
+
                         {[...Array(31)].map((_, i) => {
                             const day = i + 1;
-                            // Just a visual logic to show different selected days for variety
-                            const isSelected = (day === (room.id * 2) % 28 + 1);
-                            return <div key={i} className={`cal-day ${isSelected ? 'selected' : ''}`}>{day}</div>;
+                            let className = "cal-day";
+
+                            // Visual Logic for July
+                            if (day === 5) className += " start-range";
+                            else if (day > 5) className += " in-range";
+
+                            return (
+                                <div key={i} className={className}>
+                                    <span>{day}</span>
+                                </div>
+                            );
                         })}
                     </div>
                 </div>
 
-                {/* August 2024 */}
+                {/* August 2024 - Starts Thursday (index 4) */}
                 <div className="calendar-month">
                     <div className="month-header">
                         <span></span>
@@ -184,11 +167,27 @@ export default function RoomDetails() {
                     </div>
                     <div className="calendar-grid">
                         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <div key={d} className="cal-day-label">{d}</div>)}
+
+                        {/* Empty slots for Sun, Mon, Tue, Wed (Aug 1st was Thursday) */}
                         <div className="cal-day empty"></div>
                         <div className="cal-day empty"></div>
                         <div className="cal-day empty"></div>
                         <div className="cal-day empty"></div>
-                        {[...Array(31)].map((_, i) => <div key={i} className="cal-day">{i + 1}</div>)}
+
+                        {[...Array(31)].map((_, i) => {
+                            const day = i + 1;
+                            let className = "cal-day";
+
+                            // Visual Logic for August
+                            if (day < 7) className += " in-range";
+                            else if (day === 7) className += " end-range";
+
+                            return (
+                                <div key={i} className={className}>
+                                    <span>{day}</span>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -197,45 +196,26 @@ export default function RoomDetails() {
                 <button className="btn-book-large">Book Now</button>
             </div>
 
-            {/* Similar Rooms - Filter out current room */}
             <h3 className="section-title">Similar Rooms</h3>
             <div className="similar-rooms-grid">
-                {roomsData
-                    .filter(r => r.id !== room.id) // Don't show current room
-                    .slice(0, 3) // Show first 3 others
-                    .map(similar => (
-                        <div key={similar.id} className="similar-room-card" onClick={() => navigate(`/rooms/${similar.id}`)}>
-                            <div className="similar-room-img" style={{
-                                background: `url('${similar.image}') center/cover no-repeat`
-                            }}></div>
-                            <div className="similar-room-info">
-                                <h4>{similar.name}</h4>
-                                <p>${similar.price} per night</p>
-                            </div>
+                {roomsData.filter(r => r.id !== room.id).slice(0, 3).map(similar => (
+                    <div key={similar.id} className="similar-room-card" onClick={() => navigate(`/rooms/${similar.id}`)}>
+                        <div className="similar-room-img" style={{ background: `url('${similar.image}') center/cover no-repeat` }}></div>
+                        <div className="similar-room-info">
+                            <h4>{similar.name}</h4>
+                            <p>${similar.price} per night</p>
                         </div>
-                    ))
-                }
+                    </div>
+                ))}
             </div>
         </div>
     );
 }
 
-/* --- SVG ICONS (Helper Components) --- */
-const IconWifi = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-);
-const IconAC = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h20" /><path d="M2 16h20" /><path d="M2 8h20" /><path d="M6 12v4" /><path d="M10 12v4" /><path d="M14 12v4" /><path d="M18 12v4" /></svg>
-);
-const IconCoffee = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
-);
-const IconPool = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 20s.33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2"></path><path d="M2 16s.33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2"></path><path d="M15 11.5l1.5-1.5 2 2 3-3"></path><path d="M7 2v5h5"></path></svg>
-);
-const IconGym = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h16"></path><path d="M5 7v10"></path><path d="M19 7v10"></path><path d="M9 17h6"></path><path d="M12 7v10"></path></svg>
-);
-const IconParking = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path><path d="M6 15h4"></path><path d="M6 12v3"></path></svg>
-);
+/* Icons */
+const IconWifi = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>);
+const IconAC = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h20" /><path d="M2 16h20" /><path d="M2 8h20" /><path d="M6 12v4" /><path d="M10 12v4" /><path d="M14 12v4" /><path d="M18 12v4" /></svg>);
+const IconCoffee = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>);
+const IconPool = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 20s.33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2"></path><path d="M2 16s.33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2 .33-2 3-2 3 2 3 2"></path><path d="M15 11.5l1.5-1.5 2 2 3-3"></path><path d="M7 2v5h5"></path></svg>);
+const IconGym = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h16"></path><path d="M5 7v10"></path><path d="M19 7v10"></path><path d="M9 17h6"></path><path d="M12 7v10"></path></svg>);
+const IconParking = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path><path d="M6 15h4"></path><path d="M6 12v3"></path></svg>);

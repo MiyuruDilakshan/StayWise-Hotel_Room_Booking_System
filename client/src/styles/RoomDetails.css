@@ -1,5 +1,7 @@
 /* src/styles/RoomDetails.css */
 
+/* ... (Keep Hero, Text Content, Amenities sections as they are) ... */
+
 .room-details-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -8,7 +10,6 @@
     color: #1a1a1a;
 }
 
-/* --- HERO IMAGE --- */
 .room-details-hero {
     width: 100%;
     height: 500px;
@@ -36,7 +37,6 @@
     font-size: 1.5rem;
 }
 
-/* --- TEXT CONTENT --- */
 .room-title {
     font-size: 32px;
     font-weight: 700;
@@ -56,7 +56,6 @@
     margin-bottom: 16px;
 }
 
-/* --- AMENITIES --- */
 .section-title {
     font-size: 20px;
     font-weight: 700;
@@ -95,7 +94,7 @@
     line-height: 1.2;
 }
 
-/* --- AVAILABILITY & CALENDAR --- */
+/* --- AVAILABILITY & CALENDAR (UPDATED) --- */
 .price-tag {
     font-size: 16px;
     color: #1a1a1a;
@@ -107,65 +106,97 @@
     gap: 40px;
     margin-bottom: 40px;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .calendar-month {
-    flex: 1;
-    min-width: 300px;
+    width: 340px;
+    /* Fixed width for consistency */
+    flex-shrink: 0;
 }
 
 .month-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     font-weight: 700;
     font-size: 16px;
+    color: #1a1a1a;
+    padding: 0 10px;
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    text-align: center;
+    row-gap: 8px;
+    /* Space between rows */
+    /* No column gap to allow range backgrounds to connect visually */
 }
 
 .cal-day-label {
+    text-align: center;
     font-size: 12px;
-    font-weight: 600;
-    color: #666;
-    margin-bottom: 8px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
 }
 
+/* Base Day Cell */
 .cal-day {
-    aspect-ratio: 1;
+    height: 44px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     font-size: 14px;
     color: #1a1a1a;
+}
+
+/* The number circle wrapper */
+.cal-day span {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
-    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    /* Sit on top of background */
 }
 
 .cal-day.empty {
     cursor: default;
 }
 
-.cal-day:hover:not(.empty) {
+/* Range Backgrounds */
+.cal-day.in-range {
     background-color: #f3f4f6;
+    /* Light grey range color */
 }
 
-/* Selected Day Style (Blue Circle) */
-.cal-day.selected {
-    background-color: #2f6cff;
-    /* Assuming blue from theme */
+/* Start Date: Blue Circle + Grey Background on the Right Half */
+.cal-day.start-range {
+    background: linear-gradient(to right, transparent 50%, #f3f4f6 50%);
+}
+
+.cal-day.start-range span {
+    background-color: #266388;
+    /* Dark Blue/Teal from screenshot */
     color: white;
 }
 
-/* Range Style (Light Grey/Blue background) */
-.cal-day.in-range {
-    background-color: #eff6ff;
+/* End Date: Blue Circle + Grey Background on the Left Half */
+.cal-day.end-range {
+    background: linear-gradient(to left, transparent 50%, #f3f4f6 50%);
+}
+
+.cal-day.end-range span {
+    background-color: #266388;
+    /* Dark Blue/Teal from screenshot */
+    color: white;
 }
 
 /* --- BOOK BUTTON --- */
@@ -177,7 +208,6 @@
 
 .btn-book-large {
     background-color: #2f54eb;
-    /* Bright Blue */
     color: white;
     border: none;
     padding: 16px 48px;
@@ -230,6 +260,7 @@
 @media (max-width: 900px) {
     .calendar-container {
         flex-direction: column;
+        align-items: center;
     }
 
     .similar-rooms-grid {
