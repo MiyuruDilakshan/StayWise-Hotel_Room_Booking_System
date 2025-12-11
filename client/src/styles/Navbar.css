@@ -49,11 +49,11 @@
 }
 
 .logo-stay {
-  color: #4d7cff;
+  color: #4d7cff !important;
 }
 
 .logo-wise {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 /* Hamburger Menu - Hidden on Desktop */
@@ -110,7 +110,7 @@
 }
 
 .nav-item {
-  color: #b0b0b0;
+  color: #ffffff !important;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
@@ -123,7 +123,7 @@
 }
 
 .nav-item:hover {
-  color: #4d7cff;
+  color: #4d7cff !important;
 }
 
 .navbar-actions {
@@ -450,5 +450,35 @@
     font-size: 0.85rem;
   }
 }
+/* Add these lines at the END of Navbar.css file */
 
+.btn-create-account {
+  padding: 10px 24px;
+  background-color: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-create-account:hover {
+  background-color: #4338CA;
+  transform: translateY(-1px);
+}
+
+.btn-create-account:active {
+  transform: translateY(0);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .btn-create-account {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
 

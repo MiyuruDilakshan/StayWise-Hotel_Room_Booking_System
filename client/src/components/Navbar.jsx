@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import '../styles/Navbar.css'
 
 export default function Navbar() {
   const [user, setUser] = useState(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navigate = useNavigate()
-
+  const location = useLocation() 
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
@@ -19,7 +19,8 @@ export default function Navbar() {
     navigate(path)
     setMobileMenuOpen(false)
   }
-
+  const isLoginPage = location.pathname === '/login'
+  const isSignupPage = location.pathname === '/signup'
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -60,8 +61,24 @@ export default function Navbar() {
               <button onClick={handleLogout} className="btn-logout">Logout</button>
             ) : (
               <>
-                <button onClick={() => handleNavClick('/login')} className="btn-book-now">Book Now</button>
-                <button onClick={() => handleNavClick('/login')} className="btn-sign-in">Sign In</button>
+                {/* Show "Book Now" on all pages except login/signup */}
+                {!isLoginPage && !isSignupPage && (
+                  <button onClick={() => handleNavClick('/login')} className="btn-book-now">Book Now</button>
+                )}
+                
+                {/* Show "Create an Account" button ONLY on login page */}
+                {isLoginPage && (
+                  <button onClick={() => handleNavClick('/signup')} className="btn-create-account">
+                    Create an Account
+                  </button>
+                )}
+                
+                {/* Show "Sign In" button on signup page and other pages */}
+                {isSignupPage ? (
+                  <button onClick={() => handleNavClick('/login')} className="btn-sign-in">Sign In</button>
+                ) : !isLoginPage && (
+                  <button onClick={() => handleNavClick('/login')} className="btn-sign-in">Sign In</button>
+                )}
               </>
             )}
           </div>

@@ -14,6 +14,26 @@ import EditRoom from "./pages/admin/EditRoom";
 import Bookings from "./pages/admin/Bookings";
 import Users from "./pages/admin/Users";
 import Settings from "./pages/admin/Settings";
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
+import Login from './pages/login'
+import Signup from './pages/signup'
+import UserProfile from './pages/user_profile/UserProfile'
+import MyBookings from './pages/user_profile/MyBookings';
+import UserSettings from './pages/user_profile/UserSettings';
+import EditProfile from './pages/user_profile/EditProfile';
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminLogin from './pages/admin/AdminLogin'
+import AdminForgotPassword from './pages/admin/AdminForgotPassword'
+import RoomManagement from './pages/admin/RoomManagement'
+import Bookings from './pages/admin/Bookings'
+import Users from './pages/admin/Users'
+import Settings from './pages/admin/Settings'
+import BookingInformation from './pages/BookingInformation';
+import Payment from './pages/Payment';
+import Confirmation from './pages/Confirmation';
 
 
 // Placeholder components for pages team will create
@@ -42,7 +62,13 @@ export default function App() {
         <Route path="/login" element={<Placeholder name="Login" />} />
         <Route path="/register" element={<Placeholder name="Register" />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
-        <Route path="/profile" element={<Placeholder name="User Profile" />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/mybookings" element={<MyBookings />} />
+        <Route path="/settings" element={<UserSettings />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/booking" element={<BookingInformation />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/confirmation" element={<Confirmation />} />
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
@@ -50,7 +76,7 @@ export default function App() {
       <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
       <Route element={<AdminLayout />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/rooms" element={<Placeholder name="Manage Rooms" />} />
+        <Route path="/admin/rooms" element={<RoomManagement />} />
         <Route path="/admin/bookings" element={<Bookings />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/settings" element={<Settings />} />
