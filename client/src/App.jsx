@@ -13,10 +13,10 @@ import EditProfile from './pages/user_profile/EditProfile';
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminForgotPassword from './pages/admin/AdminForgotPassword'
-import EditRoom from "./pages/admin/EditRoom"; 
-import Bookings from "./pages/admin/Bookings"; 
-import Users from "./pages/admin/Users";
-import Settings from "./pages/admin/Settings";
+import RoomManagement from './pages/admin/RoomManagement'
+import BookingInformation from './pages/BookingInformation';
+import Payment from './pages/Payment';
+import Confirmation from './pages/Confirmation';
 
 
 // Placeholder components for pages team will create
@@ -39,8 +39,8 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Placeholder name="Browse Rooms" />} />
-        <Route path="/about" element={<Placeholder name="About Us" />} />
-        <Route path="/contact" element={<Placeholder name="Contact Us" />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact  />} />
         <Route path="/login" element={<Placeholder name="Login" />} />
         <Route path="/register" element={<Placeholder name="Register" />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
@@ -49,6 +49,11 @@ export default function App() {
         <Route path="/settings" element={<UserSettings />} />
         <Route path="/editprofile" element={<EditProfile />} />
 
+        <Route path="/profile" element={<Placeholder name="User Profile" />} />
+        <Route path="/" element={<BookingInformation />} />
+        <Route path="/booking" element={<BookingInformation />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/confirmation" element={<Confirmation />} />
       </Route>
 
       {/* Admin Routes WITHOUT navbar & footer */}
