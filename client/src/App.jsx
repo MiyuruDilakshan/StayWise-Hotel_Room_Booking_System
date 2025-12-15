@@ -24,13 +24,7 @@ import UserProfile from './pages/user_profile/UserProfile'
 import MyBookings from './pages/user_profile/MyBookings';
 import UserSettings from './pages/user_profile/UserSettings';
 import EditProfile from './pages/user_profile/EditProfile';
-import AdminDashboard from './pages/admin/AdminDashboard'
-import AdminLogin from './pages/admin/AdminLogin'
-import AdminForgotPassword from './pages/admin/AdminForgotPassword'
 import RoomManagement from './pages/admin/RoomManagement'
-import Bookings from './pages/admin/Bookings'
-import Users from './pages/admin/Users'
-import Settings from './pages/admin/Settings'
 import BookingInformation from './pages/BookingInformation';
 import Payment from './pages/Payment';
 import Confirmation from './pages/Confirmation';
@@ -57,10 +51,12 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/rooms" element={<Rooms />} />
         <Route path="/rooms/:id" element={<RoomDetails />} />
-        <Route path="/about" element={<Placeholder name="About Us" />} />
-        <Route path="/contact" element={<Placeholder name="Contact Us" />} />
-        <Route path="/login" element={<Placeholder name="Login" />} />
-        <Route path="/register" element={<Placeholder name="Register" />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/bookings" element={<Placeholder name="My Bookings" />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/mybookings" element={<MyBookings />} />

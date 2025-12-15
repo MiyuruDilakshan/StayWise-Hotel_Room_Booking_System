@@ -1,23 +1,8 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import '../styles/Home.css'
 
 export default function Home() {
-  const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    // Fetch featured rooms from API (placeholder data for now)
-    setLoading(true)
-    setTimeout(() => {
-      setRooms([
-        { id: 1, name: 'Deluxe Room', price: 120, image: '/assets/room-thumb-deluxe.png', capacity: 2, rating: 4.8 },
-        { id: 2, name: 'Suite Room', price: 180, image: '/assets/room-thumb-suite.png', capacity: 4, rating: 4.9 },
-        { id: 3, name: 'Standard Room', price: 80, image: '/assets/room-6.png', capacity: 2, rating: 4.5 },
-      ])
-      setLoading(false)
-    }, 500)
-  }, [])
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
   const [guests, setGuests] = useState(1)
@@ -84,26 +69,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Rooms */}
-      <section className="featured-rooms">
-        <div className="container">
-          <h2>Featured Rooms</h2>
-          {loading ? (
-            <p>Loading rooms...</p>
-          ) : (
-            <div className="rooms-grid">
-              {rooms.map((room) => (
-                <div key={room.id} className="room-card">
-                  <div className="room-image">
-                    <img src={room.image} alt={room.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <h3>{room.name}</h3>
-                  <p className="capacity">👥 {room.capacity} Guests</p>
-                  <p className="rating">⭐ {room.rating} (450 reviews)</p>
-                  <p className="price">${room.price}/night</p>
-                  <Link to="/rooms" className="book-btn">View Details</Link>
-                </div>
-              ))}
       {/* About Section */}
       <section className="home-about-section">
         <div className="home-about-container">
@@ -186,7 +151,7 @@ export default function Home() {
         <h2 className="section-heading">Featured Rooms</h2>
         
         <div className="rooms-container">
-          <div className="room-card">
+          <div className="home-room-card">
             <div className="room-image-wrapper">
               <img 
                 src="/images/deluxe-room.png" 
@@ -202,7 +167,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="room-card">
+          <div className="home-room-card">
             <div className="room-image-wrapper">
               <img 
                 src="/images/executive-suite.png" 
@@ -218,7 +183,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="room-card">
+          <div className="home-room-card">
             <div className="room-image-wrapper">
               <img 
                 src="/images/presidential-suite.png" 
@@ -253,40 +218,52 @@ export default function Home() {
             <div className="amenity-icon-box">
               <img src="/icons/Vector - 0.png" alt="Pool" className="amenity-icon" />
             </div>
-            <h4 className="amenity-name">Relaxing Pool</h4>
-            <p className="amenity-description">
-              Unwind by our luxurious pool, perfect for a refreshing dip or lounging in the sun.
-            </p>
+            <div className="amenity-content">
+              <span className="amenity-label">Pool</span>
+              <h4 className="amenity-name">Relaxing Pool</h4>
+              <p className="amenity-description">
+                Unwind by our luxurious pool, perfect for a refreshing dip or lounging in the sun.
+              </p>
+            </div>
           </div>
 
           <div className="amenity-item">
             <div className="amenity-icon-box">
               <img src="/icons/Vector - 1.png" alt="Dining" className="amenity-icon" />
             </div>
-            <h4 className="amenity-name">Fine Dining</h4>
-            <p className="amenity-description">
-              Savor exquisite cuisine at our award-winning restaurants, offering a variety of culinary delights.
-            </p>
+            <div className="amenity-content">
+              <span className="amenity-label">Dining</span>
+              <h4 className="amenity-name">Fine Dining</h4>
+              <p className="amenity-description">
+                Savor exquisite cuisine at our award-winning restaurants, offering a variety of culinary delights.
+              </p>
+            </div>
           </div>
 
           <div className="amenity-item">
             <div className="amenity-icon-box">
               <img src="/icons/Vector - 2.png" alt="Service" className="amenity-icon" />
             </div>
-            <h4 className="amenity-name">Personalized Service</h4>
-            <p className="amenity-description">
-              Our dedicated staff ensures every guest receives personalized attention and care.
-            </p>
+            <div className="amenity-content">
+              <span className="amenity-label">Service</span>
+              <h4 className="amenity-name">Personalized Service</h4>
+              <p className="amenity-description">
+                Our dedicated staff ensures every guest receives personalized attention and care.
+              </p>
+            </div>
           </div>
 
           <div className="amenity-item">
             <div className="amenity-icon-box">
               <img src="/icons/Vector - 3.png" alt="WiFi" className="amenity-icon" />
             </div>
-            <h4 className="amenity-name">Free High-Speed Wi-Fi</h4>
-            <p className="amenity-description">
-              Stay connected with our complimentary high-speed Wi-Fi throughout the hotel.
-            </p>
+            <div className="amenity-content">
+              <span className="amenity-label">WiFi</span>
+              <h4 className="amenity-name">Free High-Speed Wi-Fi</h4>
+              <p className="amenity-description">
+                Stay connected with our complimentary high-speed Wi-Fi throughout the hotel.
+              </p>
+            </div>
           </div>
         </div>
       </section>
