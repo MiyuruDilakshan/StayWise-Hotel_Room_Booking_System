@@ -1,29 +1,64 @@
 // src/pages/Rooms.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Rooms.css';
+import roomService from '../services/roomService';
+import '../styles/BrowseRooms.css';
 
 export default function Rooms() {
     const navigate = useNavigate();
-    // Mock data matching your screenshot
-    const [rooms] = useState([
-        { id: 1, name: "Deluxe Suite", price: 150, type: "Suite", isPopular: true, image: "/assets/room-1.png" },
-        { id: 2, name: "Superior Double Room", price: 220, type: "Double", isPopular: true, image: "/assets/room-2.png" },
-        { id: 3, name: "Executive Suite", price: 350, type: "Suite", isPopular: true, image: "/assets/room-3.png" },
-        { id: 4, name: "Ocean View Suite", price: 400, type: "Suite", isPopular: false, image: "/assets/room-4.png" },
-        { id: 5, name: "Presidential Suite", price: 500, type: "Suite", isPopular: false, image: "/assets/room-5.png" },
-        { id: 6, name: "Standard Room", price: 500, type: "Double", isPopular: false, image: "/assets/room-6.png" },
-        { id: 7, name: "Presidential Suite", price: 500, type: "Suite", isPopular: false, image: "/assets/room-5.png" }, // Reusing room 5 image for duplicate/simlar id 7
-        { id: 8, name: "Wodden Pit", price: 400, type: "Double", isPopular: false, image: "/assets/room-8.png" },
-    ]);
+    const [rooms, setRooms] = useState([]);
+    const [filteredRooms, setFilteredRooms] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     // Price Range State
-    const min = 100;
-    const max = 1000;
-    const [minPrice, setMinPrice] = useState(250);
-    const [maxPrice, setMaxPrice] = useState(750);
+    const [min, setMin] = useState(50);
+    const [max, setMax] = useState(600);
+    const [minPrice, setMinPrice] = useState(50);
+    const [maxPrice, setMaxPrice] = useState(600);
     const [minPercent, setMinPercent] = useState(0);
-    const [maxPercent, setMaxPercent] = useState(0);
+    const [maxPercent, setMaxPercent] = useState(100);
+    const [selectedCapacity, setSelectedCapacity] = useState('');
+    const [selectedBedType, setSelectedBedType] = useState('');
+    const [sortBy, setSortBy] = useState('price-low');
+
+    // Fetch rooms from database
+    useEffect(() => {
+        const fetchRooms = async () => {
+            try {
+                setLoading(true);
+                const response = await roomService.getAllRooms();
+                if (response.success) {
+                    const fetchedRooms = response.data;
+                    setRooms(fetchedRooms);
+                    setFilteredRooms(fetchedRooms);
+
+                    // Calculate dynamic price range
+                    if (fetchedRooms.length > 0) {
+                        const prices = fetchedRooms.map(r => r.price);
+                        const minP = Math.min(...prices);
+                        const maxP = Math.max(...prices);
+                        // Add some buffer
+                        const newMin = Math.floor(minP * 0.9);
+                        const newMax = Math.ceil(maxP * 1.1);
+                        
+                        setMin(newMin);
+                        setMax(newMax);
+                        setMinPrice(newMin);
+                        setMaxPrice(newMax);
+                    }
+                } else {
+                    setError('Failed to fetch rooms');
+                }
+            } catch (err) {
+                setError(err.message || 'Failed to fetch rooms');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRooms();
+    }, []);
 
     // Calculate percentages for the slider bar
     useEffect(() => {
@@ -33,38 +68,100 @@ export default function Rooms() {
         setMaxPercent(maxP);
     }, [minPrice, maxPrice, min, max]);
 
+    // Apply filters when any filter changes
+    useEffect(() => {
+        filterRooms();
+    }, [minPrice, maxPrice, selectedCapacity, selectedBedType, sortBy, rooms]);
+
+    const filterRooms = () => {
+        let filtered = rooms.filter(room => {
+            // Price filter
+            if (room.price < minPrice || room.price > maxPrice) return false;
+
+            // Capacity filter
+            if (selectedCapacity && room.capacity !== parseInt(selectedCapacity)) return false;
+
+            // Bed type filter
+            if (selectedBedType && room.bedType !== selectedBedType) return false;
+
+            return true;
+        });
+
+        // Apply sorting
+        if (sortBy === 'price-low') {
+            filtered.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price-high') {
+            filtered.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'name') {
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        setFilteredRooms(filtered);
+    };
+
     const handleMinChange = (e) => {
-        const value = Math.min(Number(e.target.value), maxPrice - 1);
-        setMinPrice(value);
+        const newMin = Number(e.target.value);
+        setMinPrice(newMin);
     };
 
     const handleMaxChange = (e) => {
-        const value = Math.max(Number(e.target.value), minPrice + 1);
-        setMaxPrice(value);
+        const newMax = Number(e.target.value);
+        setMaxPrice(newMax);
     };
 
+    const handleClearFilters = () => {
+        setMinPrice(min);
+        setMaxPrice(max);
+        setSelectedCapacity('');
+        setSelectedBedType('');
+        setSortBy('price-low');
+    };
+
+    if (loading) {
+        return (
+            <div className="rooms-page-container">
+                <div className="loading-spinner" style={{ gridColumn: '1 / -1' }}>
+                    <p>Loading rooms...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="rooms-page-container">
+                <div className="error-message" style={{ gridColumn: '1 / -1' }}>
+                    <p>Error: {error}</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="rooms-page-container">
+        <div className="browse-rooms-container">
             {/* LEFT SIDEBAR - FILTERS */}
-            <aside className="filters-sidebar">
-                <h2>Filters</h2>
+            <aside className="browse-rooms-sidebar">
+                <div className="browse-rooms-filter-header">
+                    <h2>Filters</h2>
+                    <button 
+                        className="browse-rooms-clear-btn"
+                        onClick={handleClearFilters}
+                    >
+                        Clear
+                    </button>
+                </div>
 
                 {/* Price Range */}
-                <div className="filter-group">
-                    <label className="filter-label">Price Range</label>
-                    <div className="slider-container">
-                        <div className="slider-track"></div>
-                        <div
-                            className="slider-range"
-                            style={{ left: `${minPercent}%`, width: `${maxPercent - minPercent}%` }}
-                        ></div>
+                <div className="browse-rooms-filter-group">
+                    <label className="browse-rooms-filter-label">Price Range</label>
+                    <div className="browse-rooms-range-slider">
                         <input
                             type="range"
                             min={min}
                             max={max}
                             value={minPrice}
                             onChange={handleMinChange}
-                            className="thumb thumb-left"
+                            className="browse-rooms-range-input browse-rooms-range-input-min"
                         />
                         <input
                             type="range"
@@ -72,93 +169,213 @@ export default function Rooms() {
                             max={max}
                             value={maxPrice}
                             onChange={handleMaxChange}
-                            className="thumb thumb-right"
+                            className="browse-rooms-range-input browse-rooms-range-input-max"
                         />
+                        <div className="browse-rooms-range-track"></div>
+                        <div
+                            className="browse-rooms-range-fill"
+                            style={{
+                                left: `${((minPrice - min) / (max - min)) * 100}%`,
+                                right: `${100 - ((maxPrice - min) / (max - min)) * 100}%`
+                            }}
+                        ></div>
                     </div>
-                    <div className="price-values">${minPrice} - ${maxPrice}</div>
+                    <div className="browse-rooms-price-values">${minPrice} - ${maxPrice}</div>
                 </div>
 
                 {/* Capacity */}
-                <div className="filter-group">
-                    <label className="filter-label">Capacity</label>
-                    <div className="custom-select-wrapper">
-                        <select className="custom-select">
-                            <option>Select Capacity</option>
-                            <option>1 Person</option>
-                            <option>2 People</option>
-                            <option>3+ People</option>
+                <div className="browse-rooms-filter-group">
+                    <label className="browse-rooms-filter-label">Capacity</label>
+                    <div className="browse-rooms-select-wrapper">
+                        <select 
+                            className="browse-rooms-select"
+                            value={selectedCapacity}
+                            onChange={(e) => setSelectedCapacity(e.target.value)}
+                        >
+                            <option value="">Select Capacity</option>
+                            <option value="1">1 Person</option>
+                            <option value="2">2 People</option>
+                            <option value="4">4 People</option>
                         </select>
-                        {/* CSS handles the icon */}
                     </div>
                 </div>
 
-                {/* Room Type Checkboxes */}
-                <div className="filter-group checkbox-group">
-                    <label className="checkbox-item">
-                        <input type="checkbox" /> <span className="checkmark"></span> Single
+                {/* Bed Type Checkboxes */}
+                <div className="browse-rooms-filter-group browse-rooms-checkbox-group">
+                    <label className="browse-rooms-checkbox-item">
+                        <input 
+                            type="radio" 
+                            name="bedType"
+                            value=""
+                            checked={selectedBedType === ''}
+                            onChange={(e) => setSelectedBedType(e.target.value)}
+                        />
+                        All Types
                     </label>
-                    <label className="checkbox-item">
-                        <input type="checkbox" /> <span className="checkmark"></span> Double
+                    <label className="browse-rooms-checkbox-item">
+                        <input 
+                            type="radio"
+                            name="bedType"
+                            value="Single"
+                            checked={selectedBedType === 'Single'}
+                            onChange={(e) => setSelectedBedType(e.target.value)}
+                        />
+                        Single
                     </label>
-                    <label className="checkbox-item">
-                        <input type="checkbox" /> <span className="checkmark"></span> Suite
+                    <label className="browse-rooms-checkbox-item">
+                        <input 
+                            type="radio"
+                            name="bedType"
+                            value="Double"
+                            checked={selectedBedType === 'Double'}
+                            onChange={(e) => setSelectedBedType(e.target.value)}
+                        />
+                        Double
+                    </label>
+                    <label className="browse-rooms-checkbox-item">
+                        <input 
+                            type="radio"
+                            name="bedType"
+                            value="Twin"
+                            checked={selectedBedType === 'Twin'}
+                            onChange={(e) => setSelectedBedType(e.target.value)}
+                        />
+                        Twin
+                    </label>
+                    <label className="browse-rooms-checkbox-item">
+                        <input 
+                            type="radio"
+                            name="bedType"
+                            value="Family"
+                            checked={selectedBedType === 'Family'}
+                            onChange={(e) => setSelectedBedType(e.target.value)}
+                        />
+                    Family
                     </label>
                 </div>
 
                 {/* Sort By */}
-                <div className="filter-group">
+                <div className="browse-rooms-filter-group">
                     <h3>Sort By</h3>
-                    <div className="sort-options">
-                        <label className="radio-item">
-                            <input type="radio" name="sort" defaultChecked />
-                            <span className="radio-custom"></span> Low-High Price
+                    <div className="browse-rooms-sort-options">
+                        <label className="browse-rooms-radio-item">
+                            <input 
+                                type="radio" 
+                                name="sort" 
+                                value="price-low"
+                                checked={sortBy === 'price-low'}
+                                onChange={(e) => setSortBy(e.target.value)}
+                            />
+                            Low-High Price
                         </label>
-                        <label className="radio-item">
-                            <input type="radio" name="sort" />
-                            <span className="radio-custom"></span> Popular
+                        <label className="browse-rooms-radio-item">
+                            <input 
+                                type="radio" 
+                                name="sort"
+                                value="price-high"
+                                checked={sortBy === 'price-high'}
+                                onChange={(e) => setSortBy(e.target.value)}
+                            />
+                            High-Low Price
+                        </label>
+                        <label className="browse-rooms-radio-item">
+                            <input 
+                                type="radio" 
+                                name="sort"
+                                value="name"
+                                checked={sortBy === 'name'}
+                                onChange={(e) => setSortBy(e.target.value)}
+                            />
+                            Name
                         </label>
                     </div>
                 </div>
             </aside>
 
             {/* RIGHT MAIN CONTENT - ROOMS GRID */}
-            <main className="rooms-main">
-                <div className="rooms-header">
-                    <h1>Rooms</h1>
+            <main className="browse-rooms-main">
+                <div className="browse-rooms-header">
+                    <h1>Our Rooms</h1>
                     <p>Discover our luxurious rooms and suites, each designed for comfort and elegance.</p>
                 </div>
 
-                <div className="rooms-grid">
-                    {rooms.map((room) => (
-                        <div
-                            key={room.id}
-                            className="room-card"
-                            onClick={() => navigate(`/rooms/${room.id}`)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <div className="room-image-placeholder">
-                                {room.isPopular && (
-                                    <div className="popular-badge">
-                                        <span className="badge-bold">Popular</span> <span className="badge-light">Choice</span>
-                                    </div>
-                                )}
-                                {/* Image Placeholder - Replace background with real image later */}
-                                <div
-                                    className="img-bg"
-                                    style={{
-                                        backgroundImage: `url(${room.image})`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center'
-                                    }}
-                                ></div>
-                            </div>
+                <div className="browse-rooms-count">
+                    <p>Showing {filteredRooms.length} of {rooms.length} rooms</p>
+                </div>
 
-                            <div className="room-info">
-                                <h3>{room.name}</h3>
-                                <p className="room-price">${room.price} per night</p>
+                <div className="browse-rooms-grid">
+                    {filteredRooms.length > 0 ? (
+                        filteredRooms.map((room) => {
+                            // Helper to determine image source
+                            const getImageSource = (r) => {
+                                if (r.images && r.images.length > 0) {
+                                    return r.images[0].src || r.images[0];
+                                }
+                                if (r.image) {
+                                    return r.image;
+                                }
+                                
+                            };
+                            const bgImage = getImageSource(room);
+
+                            return (
+                                <div
+                                    key={room._id}
+                                    className="browse-room-card"
+                                    onClick={() => navigate(`/rooms/${room._id}`)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <div className="browse-room-image">
+                                        <img 
+                                            src={bgImage} 
+                                            alt={room.name}
+                                            style={{ 
+                                                width: '100%', 
+                                                height: '100%', 
+                                                objectFit: 'cover',
+                                                display: 'block'
+                                            }}
+                                            onError={(e) => {
+                                                e.target.onerror = null; 
+                                                
+                                            }}
+                                        />
+                                        <div className="browse-room-overlay">
+                                            <button className="browse-room-view-btn">View Details</button>
+                                        </div>
+                                    </div>
+
+                                    <div className="browse-room-info">
+                                    <div className="browse-room-header-info">
+                                        <h3>{room.name}</h3>
+                                        <span className="browse-room-bed-badge">{room.bedType}</span>
+                                    </div>
+                                    <p className="browse-room-description">{room.description}</p>
+                                    <div className="browse-room-features">
+                                        <span className="browse-room-feature">
+                                            👥 Up to {room.capacity} guests
+                                        </span>
+                                    </div>
+                                    <div className="browse-room-amenities-preview">
+                                        {room.amenities && room.amenities.slice(0, 2).map((amenity, idx) => (
+                                            <span key={idx} className="browse-room-amenity-tag">{amenity}</span>
+                                        ))}
+                                        {room.amenities && room.amenities.length > 2 && (
+                                            <span className="browse-room-amenity-tag">+{room.amenities.length - 2} more</span>
+                                        )}
+                                    </div>
+                                    <div className="browse-room-footer">
+                                        <p className="browse-room-price">${room.price}<span>/night</span></p>
+                                    </div>
+                                </div>
                             </div>
+                            );
+                        })
+                    ) : (
+                        <div className="browse-rooms-no-message" style={{ gridColumn: '1 / -1' }}>
+                            <p>No rooms match your filters. Please adjust your search.</p>
                         </div>
-                    ))}
+                    )}
                 </div>
             </main>
         </div>

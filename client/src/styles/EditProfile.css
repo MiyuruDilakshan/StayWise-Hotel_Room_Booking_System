@@ -50,6 +50,30 @@
     background-color: #dee2e6;
 }
 
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .form-group {
     margin-bottom: 28px;
 }
@@ -122,6 +146,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 /* Action Buttons */
 .action-buttons {
     display: flex;
@@ -143,8 +173,14 @@
     transition: background-color 0.2s;
 }
 
-.save-btn:hover {
+.save-btn:hover:not(:disabled) {
     background-color: #0056b3;
+}
+
+.save-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 .cancel-btn {
@@ -155,6 +191,31 @@
     border-radius: 30px;
     font-size: 16px;
     font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancel-btn:hover:not(:disabled) {
+    background-color: #dee2e6;
+}
+
+.cancel-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
     cursor: pointer;
     transition: background-color 0.2s;
 }

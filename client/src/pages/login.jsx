@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import '../styles/Login.css'
+import { userLogin } from '../services/authService'
+import Swal from 'sweetalert2'
+import '../styles/login.css'
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -41,29 +43,36 @@ export default function Login() {
 
     try {
       // API call to login endpoint
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+      const response = await userLogin(formData.email, formData.password)
+      
+      await Swal.fire({
+        title: 'Success!',
+        text: 'You have successfully logged in.',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
       })
 
-      const data = await response.json()
+      // Check if user is admin
+      if (response.user && (response.user.role === 'admin' || response.user.role === 'super-admin' || response.user.role === 'manager')) {
+        navigate('/admin/dashboard');
+        return;
+      }
 
-      if (response.ok) {
-        // Store token in localStorage
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
-        
-        // Redirect to home page
-        navigate('/')
+      // Check if there's a pending booking that needs to redirect back to room
+      const pendingBooking = sessionStorage.getItem('pendingBooking');
+      if (pendingBooking) {
+        const booking = JSON.parse(pendingBooking);
+        sessionStorage.removeItem('pendingBooking');
+        // Redirect back to the room details page with the booking info still in session
+        navigate(`/rooms/${booking.roomId}`);
       } else {
-        setError(data.message || 'Login failed. Please try again.')
+        // Normal redirect to home page
+        navigate('/')
       }
     } catch (err) {
       console.error('Login error:', err)
-      setError('An error occurred. Please try again later.')
+      setError(err.message || 'An error occurred. Please try again later.')
     } finally {
       setLoading(false)
     }

@@ -1,0 +1,96 @@
+services:
+  # MongoDB Database Service
+  mongodb:
+    image: mongo:7.0
+    container_name: staywise_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: staywise
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - staywise-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
+  # Mongo Express - Database Management UI
+  mongo-express:
+    image: mongo-express:latest
+    container_name: staywise_mongo_express
+    restart: always
+    ports:
+      - "9000:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongodb:27017/
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - staywise-network
+
+  # Node.js Backend Service
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: staywise_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      MONGODB_URI: mongodb://admin:admin123@mongodb:27017/staywise?authSource=admin
+      JWT_SECRET: 123456789
+      PORT: 5000
+      NODE_ENV: development
+      CORS_ORIGIN: http://localhost:5174
+      BREVO_SMTP_USER: 9f71ff001@smtp-brevo.com
+      BREVO_SMTP_KEY: xsmtpsib-41228b7111484f508e22300e237a7c4a54e89751acbbd9368a64c671f46ebabc-EZTOe6aoMJugi69Q
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./server/src:/app/src
+      - /app/node_modules
+    networks:
+      - staywise-network
+
+  # React Frontend Service
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: staywise_frontend
+    restart: always
+    ports:
+      - "5174:5174"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+    volumes:
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+      - /app/node_modules
+    networks:
+      - staywise-network
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+
+networks:
+  staywise-network:
+    driver: bridge

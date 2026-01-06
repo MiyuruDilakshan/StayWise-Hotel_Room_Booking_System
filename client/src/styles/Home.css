@@ -392,7 +392,7 @@
   max-width: 900px;
 }
 
-.amenities-grid {
+.home-amenities-grid {
   display: flex;
   gap: 24px;
   margin-top: 40px;
@@ -402,7 +402,7 @@
   justify-content: center;
 }
 
-.amenity-item {
+.home-amenity-item {
   text-align: center;
   background: #ffffff;
   border: 1px solid #878787;
@@ -420,7 +420,7 @@
   overflow: hidden;
 }
 
-.amenity-item::before {
+.home-amenity-item::before {
   content: '';
   position: absolute;
   top: 0;
@@ -432,16 +432,16 @@
   transition: transform 0.4s ease;
 }
 
-.amenity-item:hover::before {
+.home-amenity-item:hover::before {
   transform: scaleX(1);
 }
 
-.amenity-item:hover {
+.home-amenity-item:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 32px rgba(77, 124, 255, 0.2);
 }
 
-.amenity-icon-box {
+.home-amenity-icon-box {
   width: 64px;
   height: 64px;
   background: linear-gradient(135deg, #4d7cff 0%, #764ba2 100%);
@@ -454,23 +454,23 @@
   transition: all 0.3s ease;
 }
 
-.amenity-item:hover .amenity-icon-box {
+.home-amenity-item:hover .home-amenity-icon-box {
   transform: scale(1.1) rotate(5deg);
   box-shadow: 0 6px 20px rgba(77, 124, 255, 0.4);
 }
 
-.amenity-icon {
+.home-amenity-icon {
   width: 32px;
   height: 32px;
   object-fit: contain;
   filter: brightness(0) invert(1);
 }
 
-.amenity-content {
+.home-amenity-content {
   width: 100%;
 }
 
-.amenity-label {
+.home-amenity-label {
   display: block;
   font-size: 12px;
   font-weight: 700;
@@ -480,7 +480,7 @@
   margin-bottom: 8px;
 }
 
-.amenity-name {
+.home-amenity-name {
   font-size: 18px;
   font-weight: 700;
   color: #1F2937;
@@ -488,7 +488,7 @@
   line-height: 1.3;
 }
 
-.amenity-description {
+.home-amenity-description {
   font-size: 14px;
   color: #6B7280;
   line-height: 1.6;

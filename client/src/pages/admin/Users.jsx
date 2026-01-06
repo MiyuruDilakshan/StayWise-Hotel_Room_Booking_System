@@ -1,30 +1,29 @@
 // client/src/pages/admin/Users.jsx
 import React, { useEffect, useState } from "react";
-import { fetchUsers, deleteUser, promoteToAdmin } from "../../../../server/src/services/users";
+import { getUsers, deleteUser } from "../../services/adminService";
 import "../../styles/Users.css";
 
-function UserRow({ user, onDelete, onPromote }) {
+function UserRow({ user, onDelete }) {
   return (
     <tr>
-      <td>{user.name}</td>
+      <td>{user.name || 'N/A'}</td>
       <td className="muted mono">{user.email}</td>
       <td>
-        <span className={`role-pill role-${user.role.toLowerCase()}`}>
-          {user.role}
+        <span className={`role-pill role-user`}>
+          User
         </span>
       </td>
       <td className="actions">
         <button
           className="link danger"
-          onClick={() => onDelete(user.id)}
+          onClick={() => {
+            if (window.confirm('Are you sure you want to delete this user?')) {
+              onDelete(user._id);
+            }
+          }}
         >
           Delete User
         </button>
-        {user.role !== "Admin" && (
-          <button className="link" onClick={() => onPromote(user.id)}>
-            Promote to Admin
-          </button>
-        )}
       </td>
     </tr>
   );
@@ -43,36 +42,23 @@ export default function Users() {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchUsers();
-      // supports either { items: [...] } or direct array
-      setUsers(Array.isArray(data) ? data : data.items || []);
+      const result = await getUsers();
+      setUsers(Array.isArray(result.data) ? result.data : []);
     } catch (err) {
       console.error("load users error", err);
-      setError("Failed to load users");
+      setError(err.message || "Failed to load users");
     } finally {
       setLoading(false);
     }
   }
 
-  async function handleDelete(id) {
-    if (!window.confirm("Delete this user? This action cannot be undone.")) return;
+  async function onDelete(userId) {
     try {
-      await deleteUser(id);
-      setUsers((prev) => prev.filter((u) => u.id !== id));
+      await deleteUser(userId);
+      setUsers(users.filter((u) => u._id !== userId));
     } catch (err) {
-      console.error("delete failed", err);
-      alert("Delete failed. See console.");
-    }
-  }
-
-  async function handlePromote(id) {
-    if (!window.confirm("Promote this user to Admin?")) return;
-    try {
-      await promoteToAdmin(id);
-      setUsers((prev) => prev.map((u) => (u.id === id ? { ...u, role: "Admin" } : u)));
-    } catch (err) {
-      console.error("promote failed", err);
-      alert("Promote failed. See console.");
+      console.error("delete error", err);
+      alert("Failed to delete user");
     }
   }
 
@@ -102,8 +88,8 @@ export default function Users() {
                   <td colSpan="4" className="no-results">No users found.</td>
                 </tr>
               ) : (
-                users.map((u) => (
-                  <UserRow key={u.id} user={u} onDelete={handleDelete} onPromote={handlePromote} />
+                users.map((user) => (
+                  <UserRow key={user._id} user={user} onDelete={onDelete} />
                 ))
               )}
             </tbody>

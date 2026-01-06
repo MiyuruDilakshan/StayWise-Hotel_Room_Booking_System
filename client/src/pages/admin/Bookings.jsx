@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AdminNavbar from '../../components/AdminNavbar';
-import { fetchBookings, updateBookingStatus } from "../../../../server/src/services/bookings";
+import { getBookings, updateBookingStatus } from "../../services/adminService";
 import BookingRow from "../../components/BookingRow";
 import "../../styles/Bookings.css";
 
 const STATUS_ALL = "all";
-const STATUS_OPTIONS = ["Completed", "Pending", "Cancelled"];
+const STATUS_OPTIONS = ["Confirmed", "Pending", "Cancelled"];
 
 export default function Bookings() {
     const [bookings, setBookings] = useState([]);
@@ -24,12 +24,23 @@ export default function Bookings() {
         setLoading(true);
         setError(null);
         try {
-            const data = await fetchBookings({
-                status: statusFilter === STATUS_ALL ? "" : statusFilter.toLowerCase(),
-                page,
-                perPage,
-            });
-            setBookings(data.items || []);
+            // Fetch real bookings from API
+            const result = await getBookings();
+            
+            let filteredBookings = result.data || [];
+            
+            // Filter by status if not "all"
+            if (statusFilter !== STATUS_ALL) {
+                filteredBookings = filteredBookings.filter(b => 
+                    b.status === statusFilter.toLowerCase()
+                );
+            }
+            
+            // Paginate
+            const startIndex = (page - 1) * perPage;
+            const paginatedBookings = filteredBookings.slice(startIndex, startIndex + perPage);
+            
+            setBookings(paginatedBookings || []);
         } catch (err) {
             console.error("Failed to load bookings", err);
             setError("Failed to load bookings");
@@ -39,7 +50,7 @@ export default function Bookings() {
     }
 
     async function handleAction(id, action) {
-        const newStatus = action === "approve" ? "completed" : "cancelled";
+        const newStatus = action === "approve" ? "confirmed" : "cancelled";
         if (!window.confirm(`Are you sure you want to ${action} this booking?`)) return;
         try {
             await updateBookingStatus(id, newStatus);

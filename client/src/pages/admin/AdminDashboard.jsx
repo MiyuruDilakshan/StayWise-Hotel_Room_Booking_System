@@ -1,75 +1,75 @@
 import React, { useState, useEffect } from 'react';
+import { getUserStats, getBookingStats, getRooms, fetchBookings } from '../../services/adminService';
 import '../../styles/AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [adminData, setAdminData] = useState(null);
   const [stats, setStats] = useState({
-    totalRooms: 250,
-    roomsGrowth: '+10%',
-    totalBookings: 1200,
-    bookingsGrowth: '+5%',
-    totalUsers: 500,
-    usersGrowth: '+8%',
-    revenue: 150000,
-    revenueGrowth: '+12%'
+    totalRooms: 0,
+    roomsGrowth: '0%',
+    totalBookings: 0,
+    bookingsGrowth: '0%',
+    totalUsers: 0,
+    usersGrowth: '0%',
+    revenue: 0,
+    revenueGrowth: '0%'
   });
-
-  const [recentBookings] = useState([
-    {
-      id: 'BK12345',
-      roomType: 'Deluxe Suite',
-      checkIn: '2024-07-15',
-      checkOut: '2024-07-20',
-      user: 'Liam Carter',
-      status: 'Confirmed'
-    },
-    {
-      id: 'BK12346',
-      roomType: 'Standard Room',
-      checkIn: '2024-07-16',
-      checkOut: '2024-07-18',
-      user: 'Olivia Bennett',
-      status: 'Confirmed'
-    },
-    {
-      id: 'BK12347',
-      roomType: 'Executive Suite',
-      checkIn: '2024-07-17',
-      checkOut: '2024-07-22',
-      user: 'Noah Thompson',
-      status: 'Pending'
-    },
-    {
-      id: 'BK12348',
-      roomType: 'Family Room',
-      checkIn: '2024-07-18',
-      checkOut: '2024-07-25',
-      user: 'Isabella Hayes',
-      status: 'Confirmed'
-    },
-    {
-      id: 'BK12349',
-      roomType: 'Deluxe Suite',
-      checkIn: '2024-07-19',
-      checkOut: '2024-07-24',
-      user: 'Ethan Parker',
-      status: 'Cancelled'
-    }
-  ]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [recentBookings, setRecentBookings] = useState([]);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('adminUser'));
-    setAdminData(user);
+    const loadDashboardData = async () => {
+      try {
+        setLoading(true);
+        const user = JSON.parse(localStorage.getItem('adminUser'));
+        setAdminData(user);
+
+        // Load user stats
+        const userStatsResult = await getUserStats();
+        if (userStatsResult.success) {
+          setStats(prev => ({
+            ...prev,
+            totalUsers: userStatsResult.data.totalUsers || 0,
+            usersGrowth: `+${userStatsResult.data.newUsersThisMonth || 0} this month`
+          }));
+        }
+
+        // Load booking stats (including revenue)
+        const bookingStatsResult = await getBookingStats();
+        if (bookingStatsResult.success) {
+          setStats(prev => ({
+            ...prev,
+            totalBookings: bookingStatsResult.data.totalBookings || 0,
+            revenue: bookingStatsResult.data.revenue || 0
+          }));
+        }
+
+        // Load rooms to count them
+        const roomsResult = await getRooms();
+        if (roomsResult.success) {
+             setStats(prev => ({
+                ...prev,
+                totalRooms: roomsResult.count || 0
+             }));
+        }
+
+        // Load recent bookings
+        const bookingsResult = await fetchBookings({ perPage: 5 });
+        if (bookingsResult.success) {
+            setRecentBookings(bookingsResult.data.slice(0, 5));
+        }
+
+      } catch (err) {
+        console.error('Error loading dashboard:', err);
+        setError('Failed to load dashboard data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDashboardData();
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminUser');
-  };
-
-  const handleBackToHome = () => {
-    window.location.href = '/';
-  };
 
   const getStatusClass = (status) => {
     switch (status.toLowerCase()) {
@@ -84,11 +84,24 @@ const AdminDashboard = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="dashboard-wrapper">
+        <div className="dashboard-header">
+          <h1>Dashboard</h1>
+        </div>
+        <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="dashboard-wrapper">
       <div className="dashboard-header">
         <h1>Dashboard</h1>
       </div>
+
+      {error && <div style={{ padding: '20px', color: 'red', textAlign: 'center' }}>{error}</div>}
 
       {/* Overview Section */}
       <section className="overview-section">
@@ -137,12 +150,12 @@ const AdminDashboard = () => {
             </thead>
             <tbody>
               {recentBookings.map((booking) => (
-                <tr key={booking.id}>
-                  <td className="booking-id">{booking.id}</td>
-                  <td className="room-type">{booking.roomType}</td>
-                  <td>{booking.checkIn}</td>
-                  <td>{booking.checkOut}</td>
-                  <td>{booking.user}</td>
+                <tr key={booking._id || booking.id}>
+                  <td className="booking-id">{(booking._id || booking.id).substring(0, 8)}...</td>
+                  <td className="room-type">{booking.room ? booking.room.name : booking.roomType || 'N/A'}</td>
+                  <td>{new Date(booking.checkIn).toLocaleDateString()}</td>
+                  <td>{new Date(booking.checkOut).toLocaleDateString()}</td>
+                  <td>{booking.user ? booking.user.name : booking.user || 'Guest'}</td>
                   <td>
                     <span className={`status-badge ${getStatusClass(booking.status)}`}>
                       {booking.status}

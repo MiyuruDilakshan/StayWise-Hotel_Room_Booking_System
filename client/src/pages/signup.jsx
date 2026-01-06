@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import '../styles/Signup.css'
+import { userSignup } from '../services/authService'
+import Swal from 'sweetalert2'
+import '../styles/signup.css'
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -57,33 +59,21 @@ export default function Signup() {
 
     try {
       // API call to signup endpoint
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password
-        })
+      await userSignup(formData.name, formData.email, formData.password)
+      
+      await Swal.fire({
+        title: 'Account Created!',
+        text: 'Your account has been created successfully.',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
       })
 
-      const data = await response.json()
-
-      if (response.ok) {
-        // Store token in localStorage
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
-        
-        // Redirect to home page
-        navigate('/')
-      } else {
-        setError(data.message || 'Signup failed. Please try again.')
-      }
+      // Redirect to home page
+      navigate('/')
     } catch (err) {
       console.error('Signup error:', err)
-      setError('An error occurred. Please try again later.')
+      setError(err.message || 'An error occurred. Please try again later.')
     } finally {
       setLoading(false)
     }

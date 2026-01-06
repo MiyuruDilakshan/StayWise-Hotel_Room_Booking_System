@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import roomService from '../services/roomService'
 import '../styles/Home.css'
 
 export default function Home() {
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
   const [guests, setGuests] = useState(1)
+  const [featuredRooms, setFeaturedRooms] = useState([])
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchFeaturedRooms = async () => {
+      try {
+        const response = await roomService.getAllRooms();
+        if (response.success && response.data) {
+          // Get 3 random rooms or just the first 3
+          setFeaturedRooms(response.data.slice(0, 3));
+        }
+      } catch (error) {
+        console.error('Failed to fetch featured rooms', error);
+      }
+    };
+    fetchFeaturedRooms();
+  }, []);
 
   const handleSearch = () => {
     if (checkIn && checkOut) {
@@ -151,53 +168,31 @@ export default function Home() {
         <h2 className="section-heading">Featured Rooms</h2>
         
         <div className="rooms-container">
-          <div className="home-room-card">
-            <div className="room-image-wrapper">
-              <img 
-                src="/images/deluxe-room.png" 
-                alt="Deluxe Room" 
-                className="room-image"
-              />
-            </div>
-            <div className="room-details">
-              <h3 className="room-name">Deluxe Room</h3>
-              <p className="room-desc">
-                Experience luxury in our Deluxe Rooms with stunning city views.
-              </p>
-            </div>
-          </div>
-
-          <div className="home-room-card">
-            <div className="room-image-wrapper">
-              <img 
-                src="/images/executive-suite.png" 
-                alt="Executive Suite" 
-                className="room-image"
-              />
-            </div>
-            <div className="room-details">
-              <h3 className="room-name">Executive Suite</h3>
-              <p className="room-desc">
-                Indulge in our Executive Suites with a private balcony and premium amenities.
-              </p>
-            </div>
-          </div>
-
-          <div className="home-room-card">
-            <div className="room-image-wrapper">
-              <img 
-                src="/images/presidential-suite.png" 
-                alt="Presidential Suite" 
-                className="room-image"
-              />
-            </div>
-            <div className="room-details">
-              <h3 className="room-name">Presidential Suite</h3>
-              <p className="room-desc">
-                Our Presidential Suite offers unparalleled luxury and space for an unforgettable stay.
-              </p>
-            </div>
-          </div>
+          {featuredRooms.length > 0 ? (
+            featuredRooms.map((room) => (
+              <div key={room._id} className="home-room-card" onClick={() => navigate(`/rooms/${room._id}`)} style={{cursor: 'pointer'}}>
+                <div className="room-image-wrapper">
+                  <img 
+                    src={(() => {
+                        if (room.images && room.images.length > 0) return room.images[0].src || room.images[0];
+                        if (room.image) return room.image;
+                        return '/images/room-default.jpg';
+                    })()}
+                    alt={room.name} 
+                    className="room-image"
+                  />
+                </div>
+                <div className="room-details">
+                  <h3 className="room-name">{room.name}</h3>
+                  <p className="room-desc">
+                    {room.description ? room.description.substring(0, 100) + '...' : 'Experience luxury in our rooms.'}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>Loading featured rooms...</p>
+          )}
         </div>
       </section>
 
@@ -213,54 +208,54 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="amenities-grid">
-          <div className="amenity-item">
-            <div className="amenity-icon-box">
-              <img src="/icons/Vector - 0.png" alt="Pool" className="amenity-icon" />
+        <div className="home-amenities-grid">
+          <div className="home-amenity-item">
+            <div className="home-amenity-icon-box">
+              <img src="/icons/Vector - 0.png" alt="Pool" className="home-amenity-icon" />
             </div>
-            <div className="amenity-content">
-              <span className="amenity-label">Pool</span>
-              <h4 className="amenity-name">Relaxing Pool</h4>
-              <p className="amenity-description">
+            <div className="home-amenity-content">
+              <span className="home-amenity-label">Pool</span>
+              <h4 className="home-amenity-name">Relaxing Pool</h4>
+              <p className="home-amenity-description">
                 Unwind by our luxurious pool, perfect for a refreshing dip or lounging in the sun.
               </p>
             </div>
           </div>
 
-          <div className="amenity-item">
-            <div className="amenity-icon-box">
-              <img src="/icons/Vector - 1.png" alt="Dining" className="amenity-icon" />
+          <div className="home-amenity-item">
+            <div className="home-amenity-icon-box">
+              <img src="/icons/Vector - 1.png" alt="Dining" className="home-amenity-icon" />
             </div>
-            <div className="amenity-content">
-              <span className="amenity-label">Dining</span>
-              <h4 className="amenity-name">Fine Dining</h4>
-              <p className="amenity-description">
+            <div className="home-amenity-content">
+              <span className="home-amenity-label">Dining</span>
+              <h4 className="home-amenity-name">Fine Dining</h4>
+              <p className="home-amenity-description">
                 Savor exquisite cuisine at our award-winning restaurants, offering a variety of culinary delights.
               </p>
             </div>
           </div>
 
-          <div className="amenity-item">
-            <div className="amenity-icon-box">
-              <img src="/icons/Vector - 2.png" alt="Service" className="amenity-icon" />
+          <div className="home-amenity-item">
+            <div className="home-amenity-icon-box">
+              <img src="/icons/Vector - 2.png" alt="Service" className="home-amenity-icon" />
             </div>
-            <div className="amenity-content">
-              <span className="amenity-label">Service</span>
-              <h4 className="amenity-name">Personalized Service</h4>
-              <p className="amenity-description">
+            <div className="home-amenity-content">
+              <span className="home-amenity-label">Service</span>
+              <h4 className="home-amenity-name">Personalized Service</h4>
+              <p className="home-amenity-description">
                 Our dedicated staff ensures every guest receives personalized attention and care.
               </p>
             </div>
           </div>
 
-          <div className="amenity-item">
-            <div className="amenity-icon-box">
-              <img src="/icons/Vector - 3.png" alt="WiFi" className="amenity-icon" />
+          <div className="home-amenity-item">
+            <div className="home-amenity-icon-box">
+              <img src="/icons/Vector - 3.png" alt="WiFi" className="home-amenity-icon" />
             </div>
-            <div className="amenity-content">
-              <span className="amenity-label">WiFi</span>
-              <h4 className="amenity-name">Free High-Speed Wi-Fi</h4>
-              <p className="amenity-description">
+            <div className="home-amenity-content">
+              <span className="home-amenity-label">WiFi</span>
+              <h4 className="home-amenity-name">Free High-Speed Wi-Fi</h4>
+              <p className="home-amenity-description">
                 Stay connected with our complimentary high-speed Wi-Fi throughout the hotel.
               </p>
             </div>

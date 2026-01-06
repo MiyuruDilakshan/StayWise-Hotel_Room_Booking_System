@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { adminLogin } from '../../services/authService';
 import AdminNavbar from '../../components/AdminNavbar';
 import '../../styles/AdminLogin.css';
 
@@ -16,25 +17,10 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('adminToken', data.token);
-        localStorage.setItem('adminUser', JSON.stringify(data.user));
-        navigate('/admin/dashboard');
-      } else {
-        setError(data.message || 'Login failed');
-      }
+      await adminLogin(email, password);
+      navigate('/admin/dashboard');
     } catch (err) {
-      setError('Server error. Please try again later.');
+      setError(err.message || 'Server error. Please try again later.');
     } finally {
       setLoading(false);
     }

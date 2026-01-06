@@ -1,4 +1,3 @@
-// client/src/pages/Contact.jsx
 import React, { useState } from "react";
 import "../styles/Contact.css";
 
